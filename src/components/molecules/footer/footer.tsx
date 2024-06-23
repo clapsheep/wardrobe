@@ -1,46 +1,58 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Footer() {
   const style = {
-    h3: "uppercase font-bold text-[14px]",
-    li: "flex flex-col text-[12px] text-[#2727A] gap-1",
+    h3: "uppercase font-bold text-b-2-bold",
+    li: "flex flex-col gap-1",
     link: "",
   };
 
   return (
-    <footer className="w-full px-[85px] text-[12px]">
-      <nav className="border-[rgba(93, 93, 93, 1)] border-y py-5">
+    <footer className="text-b-3-regular mobile:px-[20px] w-full px-[85px] text-gray-800">
+      <nav className="border-y border-gray-200 py-5">
         <ul className="flex gap-16">
           <li className={`${style.li} `}>
             <h3 className={`${style.h3}`}>home</h3>
-            <Link href="">style 추천</Link>
+            <Link className={`${style.link}`} href="">
+              style 추천
+            </Link>
           </li>
           <li className={`${style.li}`}>
             <h3 className={`${style.h3}`}>dressroom</h3>
-            <Link href="">나의 옷장</Link>
+            <Link className={`${style.link}`} href="">
+              나의 옷장
+            </Link>
           </li>
           <li className={`${style.li}`}>
             <h3 className={`${style.h3}`}>style</h3>
-            <Link href="">스타일</Link>
+            <Link className={`${style.link}`} href="">
+              스타일
+            </Link>
           </li>
           <li className={`${style.li}`}>
             <h3 className={`${style.h3}`}>my page</h3>
-            <Link href="">회원정보 수정</Link>
-            <Link href="">마이 사이즈</Link>
+            <Link className={`${style.link}`} href="">
+              회원정보 수정
+            </Link>
+            <Link className={`${style.link}`} href="">
+              마이 사이즈
+            </Link>
           </li>
         </ul>
       </nav>
       <div className="flex flex-col gap-5 py-5">
         <div className="flex gap-[6px]">
-          <Link className="font-semibold" href="#">
+          <Link className="text-b-3-semibold" href="#">
             개인정보처리방침
           </Link>
-          <div className="border-r border-[#A0A0A0]"></div>
-          <Link href="#">이용약관</Link>
+          <div className="h-[1rem] border-r border-gray-400"></div>
+          <Link className="" href="#">
+            이용약관
+          </Link>
         </div>
-        <address className="text-[12px] not-italic">
-          상호명 : wardrobe 소재지 : 서울특별시 종로구 동숭동 동숭길 123{" "}
+        <address className="mobile:flex flex-col not-italic text-gray-500">
+          <span>상호명 : wardrobe </span>
+          <span>소재지 : 서울특별시 종로구 종로3길 17 </span>
           <Link href="mailto:localhost1101@naver.com">
             이메일 : localhost1101@naver.com
           </Link>
