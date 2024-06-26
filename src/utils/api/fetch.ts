@@ -7,8 +7,9 @@ const { MONGO_API } = process.env;
 export const getFullList = async (
   collection: TCollection,
 ): Promise<TUser[]> => {
-  const res = await fetch(`${MONGO_API}/${collection}`);
+  const res = await fetch(`${MONGO_API}/${collection}`, { cache: "no-cache" });
   const { list } = await res.json();
+  console.log(list);
 
   return list;
 };
@@ -17,7 +18,9 @@ export const getFullList = async (
 
 // 유저 1명만 불러오기 getOneUser(userId)
 export const getOneUser = async (userId: string): Promise<TUser> => {
-  const res = await fetch(`${MONGO_API}/users/${userId}`);
+  const res = await fetch(`${MONGO_API}/user/${userId}`, {
+    cache: "no-cache",
+  });
   const { user } = await res.json();
   return user;
 };
@@ -25,7 +28,7 @@ export const getOneUser = async (userId: string): Promise<TUser> => {
 // 유저 생성하기
 export const createUser = async () => {
   try {
-    const res = await fetch(`${MONGO_API}/users`, { method: "POST" });
+    const res = await fetch(`${MONGO_API}/user`, { method: "POST" });
   } catch (err: any) {
     return NextResponse.json({ err: err.message });
   }
@@ -34,7 +37,7 @@ export const createUser = async () => {
 // 유저 삭제하기 deleteUser(userId)
 export const deleteUser = async (userId: string) => {
   try {
-    const res = await fetch(`${MONGO_API}/users/${userId}`, {
+    const res = await fetch(`${MONGO_API}/user/${userId}`, {
       method: "DELETE",
     });
   } catch (err: any) {
