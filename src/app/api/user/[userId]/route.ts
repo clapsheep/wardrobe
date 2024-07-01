@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import User from "@/models/user";
+import { User } from "@/models/schema";
 import { isValidObjectId } from "mongoose";
 
 export const GET = async (
