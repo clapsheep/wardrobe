@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import Product from "@/models/product";
+import { Product } from "@/models/schema";
 
 export const GET = async () => {
   try {

@@ -7,22 +7,32 @@ interface User {
   username: string;
   passward: string;
   userInfo: { weight: number; hieght: number };
+  dressroom: TDressroom[];
+  styles: String;
+  bookmark: String;
+  like: String;
+}
+
+interface Style {
+  createUser: String;
+  product: String[];
+  image: string;
+  hashtag: string[];
 }
 interface Product {
   site: string;
   name: string;
   image: string;
   price: number;
-  color: string;
-  weather: string[];
-  size: string;
-  category: string[];
+  category: string;
 }
-interface Style {
-  image: string;
-  hashtag: string[];
+interface DressroomItem {
+  color: string;
+  season: string[];
+  size: string;
 }
 export interface TUser extends User, Mongo {}
+export interface TDressroom extends Product, DressroomItem, Mongo {}
 export interface TProduct extends Product, Mongo {}
 export interface TStyle extends Style, Mongo {}
 
