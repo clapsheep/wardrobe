@@ -23,7 +23,7 @@ export default function Svg({
   } else {
     if (mobile) {
       return (
-        <svg style={{ color }}>
+        <svg style={{ color }} width={size}>
           <use href={`logo.svg#mobile-${color}`} />
         </svg>
       );
