@@ -1,6 +1,6 @@
 interface Svg {
   id?: string;
-  color?: "black" | "white";
+  color?: string;
   size?: number;
   logo?: boolean;
   mobile?: boolean;
