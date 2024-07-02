@@ -21,13 +21,13 @@ const sitemap = {
 
 function MobileSiteMapItem({ children }: MenuType) {
   return (
-    <li className="">
+    <li>
       <Link
         className="flex justify-between hover:text-h-3-semibold hover:underline hover:decoration-white"
         href=""
       >
         {children}
-        <Svg id="arrow-right" />
+        <Svg id="arrow-right" color="white" size={28} />
       </Link>
     </li>
   );
@@ -35,13 +35,13 @@ function MobileSiteMapItem({ children }: MenuType) {
 
 export default function MobileHamburger() {
   return (
-    <div className="flex h-svh flex-col gap-[106px] bg-gray-900 p-[20px]">
+    <div className="flex h-svh flex-col gap-[106px] bg-gray-900 p-[20px] font-sans">
       <div className="flex justify-between">
         <Link href={sitemap["main"]["Home"]}>
-          <Image src="/logo.svg" width={127} height={27} priority alt="" />
+          <Svg logo mobile color="white" size={127} />
         </Link>
         <button>
-          <Svg id="cancel" color="white" />
+          <Svg id="cancel" color="white" size={28} />
         </button>
       </div>
       <nav>
