@@ -10,7 +10,7 @@ interface Svg {
 export default function Svg({
   id,
   color = "black",
-  size = 24,
+  size = 28,
   logo,
   mobile,
 }: Svg) {
@@ -29,7 +29,7 @@ export default function Svg({
       );
     } else {
       return (
-        <svg style={{ color }}>
+        <svg style={{ color }} width={size}>
           <use href={`logo.svg#web-${color}`} />
         </svg>
       );
