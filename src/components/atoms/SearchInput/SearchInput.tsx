@@ -1,18 +1,46 @@
+"use client";
+import { FormEvent } from "react";
 import { Svg } from "@/components/atoms";
 type TSearchInput = {
   className?: string;
 };
 export default function SearchInput({ className }: TSearchInput) {
+  const handleSearchLists = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    console.log(formData.get);
+    const searchValue = formData.get("search");
+
+    if (typeof searchValue === "string" && searchValue.trim() !== "") {
+      const currentSearchList = localStorage.getItem("searchKeyword");
+      let searchList: string[] = [];
+      if (currentSearchList) {
+        searchList = JSON.parse(currentSearchList);
+      }
+      if (!searchList.includes(searchValue)) {
+        searchList.unshift(searchValue);
+        localStorage.setItem("searchKeyword", JSON.stringify(searchList));
+      }
+    }
+  };
+
   return (
-    <div className={`relative h-[80px] w-[50%] ${className}`}>
+    <form
+      onSubmit={handleSearchLists}
+      className={`relative h-[80px] w-[50%] mobile:w-full ${className}`}
+    >
+      <label htmlFor="search"></label>
       <input
+        id="search"
         type="text"
+        autoComplete="off"
+        name="search"
         placeholder="상품명 또는 #태그명으로 검색하세요"
-        className="placholder:text-gray-300 h-[80px] w-full border-b-[7px] border-black bg-transparent text-h-1-regular"
+        className="placholder:text-gray-300 h-[80px] w-full border-b-[7px] border-black bg-transparent text-h-1-regular mobile:border-b-[5px] mobile:text-h-4-regular"
       />
-      <div className="absolute bottom-[25%] right-0">
+      <button className="absolute bottom-[25%] right-0">
         <Svg id="search" size={50} />
-      </div>
-    </div>
+      </button>
+    </form>
   );
 }
