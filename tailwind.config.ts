@@ -86,6 +86,10 @@ const config: Config = {
         "b-3-bold": ["12px", { lineHeight: "150%", fontWeight: 700 }],
         "b-3-semibold": ["12px", { lineHeight: "150%", fontWeight: 600 }],
         "b-3-regular": ["12px", { lineHeight: "150%", fontWeight: 400 }],
+
+        "b-4-bold": ["10px", { lineHeight: "150%", fontWeight: 700 }],
+        "b-4-semibold": ["10px", { lineHeight: "150%", fontWeight: 600 }],
+        "b-4-regular": ["10px", { lineHeight: "150%", fontWeight: 400 }],
       },
     },
     fontFamily: { sans: "Poppins" },
