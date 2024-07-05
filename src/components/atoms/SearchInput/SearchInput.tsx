@@ -8,14 +8,13 @@ export default function SearchInput({ className }: TSearchInput) {
   const handleSearchLists = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    console.log(formData.get);
     const searchValue = formData.get("search");
 
     if (typeof searchValue === "string" && searchValue.trim() !== "") {
-      const currentSearchList = localStorage.getItem("searchKeyword");
+      const recentSearchList = localStorage.getItem("searchKeyword");
       let searchList: string[] = [];
-      if (currentSearchList) {
-        searchList = JSON.parse(currentSearchList);
+      if (recentSearchList) {
+        searchList = JSON.parse(recentSearchList);
       }
       if (!searchList.includes(searchValue)) {
         searchList.unshift(searchValue);
