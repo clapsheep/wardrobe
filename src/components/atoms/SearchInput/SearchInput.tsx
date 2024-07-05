@@ -1,11 +1,16 @@
 "use client";
 import { FormEvent } from "react";
 import { Svg } from "@/components/atoms";
+import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
 type TSearchInput = {
   className?: string;
+  setList: Dispatch<SetStateAction<string[]>>;
 };
-export default function SearchInput({ className }: TSearchInput) {
+export default function SearchInput({ className, setList }: TSearchInput) {
+  const router = useRouter();
   const handleSearchLists = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const searchValue = formData.get("search");
 
@@ -18,6 +23,8 @@ export default function SearchInput({ className }: TSearchInput) {
       if (!searchList.includes(searchValue)) {
         searchList.unshift(searchValue);
         localStorage.setItem("searchKeyword", JSON.stringify(searchList));
+        setList(searchList);
+        router.push(`/search=${encodeURIComponent(searchValue)}`);
       }
     }
   };

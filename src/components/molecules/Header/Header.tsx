@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Svg } from "@/components/atoms";
 import { useState, useEffect } from "react";
+import SearchModal from "../SearchModal/SearchModal";
 
 type THeader = {
   isScrolled: boolean;
@@ -25,6 +26,7 @@ const navItems = [
 ];
 
 function AppHeader({ isScrolled }: THeader) {
+  const [isSearchState, setIsSearchState] = useState<boolean>(false);
   return (
     <header
       className={`w-full px-[83px] font-sans ${
@@ -73,12 +75,20 @@ function AppHeader({ isScrolled }: THeader) {
             ))}
           </ul>
           <li className="col-start-8 justify-self-end">
-            <button>
+            <button onClick={() => setIsSearchState(true)}>
               <Svg id="search" size={isScrolled ? 28 : 38} color="black" />
             </button>
           </li>
         </ul>
       </nav>
+      {isSearchState ? (
+        <SearchModal
+          closeFn={() => setIsSearchState(false)}
+          open={isSearchState}
+        />
+      ) : (
+        ""
+      )}
     </header>
   );
 }

@@ -25,40 +25,55 @@ function RecentSearchKeyword() {
   }, []);
 
   return (
-    <div className="flex w-[50%] flex-col gap-[24px] py-3 mobile:w-full">
-      <div className="flex justify-between">
-        <h2 className="text-h-1-semibold mobile:text-h-3-semibold">
-          최근 검색어
-        </h2>
-        <button
-          onClick={handleStorage.allClear}
-          className="text-h-4-semibold text-gray-400 mobile:text-h-5-semibold"
-        >
-          전체 삭제
-        </button>
+    <>
+      <SearchInput setList={setRecentSearchList} />
+      <div className="flex w-[50%] flex-col gap-[24px] py-3 mobile:w-full">
+        <div className="flex justify-between">
+          <h2 className="text-h-1-semibold mobile:text-h-3-semibold">
+            최근 검색어
+          </h2>
+          <button
+            onClick={handleStorage.allClear}
+            className="text-h-4-semibold text-gray-400 mobile:text-h-5-semibold"
+          >
+            전체 삭제
+          </button>
+        </div>
+        <ul className="flex flex-col gap-[24px] text-h-4-regular text-gray-600 mobile:text-h-5-regular">
+          {recentSearchList?.map((keyword) => (
+            <li className="flex justify-between" key={keyword}>
+              {keyword}
+              <button onClick={() => handleStorage["itemClear"](keyword)}>
+                <Svg id="cancel" size={24} color={"A0A0A0"} />
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="flex flex-col gap-[24px] text-h-4-regular text-gray-600 mobile:text-h-5-regular">
-        {recentSearchList?.map((keyword) => (
-          <li className="flex justify-between" key={keyword}>
-            {keyword}
-            <button onClick={() => handleStorage["itemClear"](keyword)}>
-              <Svg id="cancel" size={24} color={"A0A0A0"} />
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    </>
   );
 }
 
-export default function SearchModal() {
+interface TSearchModal {
+  className?: string;
+  open: boolean;
+  closeFn: () => void;
+}
+
+export default function SearchModal({
+  closeFn,
+  className,
+  open,
+}: TSearchModal) {
   return (
-    <div className="bg-[rgba(255, 255, 255, 0.97)] z-10 flex h-full w-full flex-col items-end p-[82px] font-sans mobile:p-4">
-      <button className="pb-[53px]">
-        <Svg id="cancel" size={48} color={"white"} />
+    <dialog
+      className={`bg-none fixed inset-0 z-10 flex h-svh w-full flex-col items-end bg-opacity-50 p-[82px] font-sans mobile:p-4 ${className}`}
+      open={open}
+    >
+      <button onClick={closeFn} className="pb-[53px]">
+        <Svg id="cancel" size={48} color={"A0A0A0"} />
       </button>
-      <SearchInput />
       <RecentSearchKeyword />
-    </div>
+    </dialog>
   );
 }
