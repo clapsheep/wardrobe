@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
+import {
+  Header,
+  SearchModal,
+  Footer,
+  MobileHamburger,
+} from "@/components/molecules";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko-KR">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className}`}>
+        <Header />
+      </body>
     </html>
   );
 }
