@@ -6,7 +6,6 @@ type TSearchInput = {
 };
 export default function SearchInput({ className }: TSearchInput) {
   const handleSearchLists = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const searchValue = formData.get("search");
 
