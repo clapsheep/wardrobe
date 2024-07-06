@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Svg } from "@/components/atoms";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import SearchModal from "../SearchModal/SearchModal";
 
 type THeader = {
@@ -15,17 +16,18 @@ const userMenuItems = () => {
     { href: "/", iconId: "person", text: "Profile" },
     { href: "/", iconId: "bookmark_false", text: "Bookmark" },
     isLogin
-      ? { href: "/", iconId: "log-out", text: "Logout" }
-      : { href: "/", iconId: "log-in", text: "Login" },
+      ? { href: "/logout", iconId: "log-out", text: "Logout" }
+      : { href: "/login", iconId: "log-in", text: "Login" },
   ];
 };
 
 const navItems = [
-  { href: "/", text: "Dressroom" },
-  { href: "/", text: "Style" },
+  { href: "/dressroom", text: "Dressroom" },
+  { href: "/style", text: "Style" },
 ];
 
 function AppHeader({ isScrolled }: THeader) {
+  const pathname = usePathname();
   const [isSearchState, setIsSearchState] = useState<boolean>(false);
   return (
     <header
@@ -37,7 +39,7 @@ function AppHeader({ isScrolled }: THeader) {
         <ul className="font-gray-800 flex justify-end gap-4 text-center text-b-0-regular">
           {userMenuItems().map((item) => (
             <li key={item.iconId}>
-              <Link href={item.href} className="flex items-center gap-1">
+              <Link href={item.href} className={`flex items-center gap-1`}>
                 <Svg id={item.iconId} size={18} />
                 {item.text}
               </Link>
@@ -49,7 +51,10 @@ function AppHeader({ isScrolled }: THeader) {
         <ul className="grid grid-cols-7 grid-rows-1 items-center text-h-2-bold">
           <div className="col-span-2 col-start-1 flex gap-[42px]">
             {navItems.map((item) => (
-              <li key={item.text}>
+              <li
+                className={`${pathname === `${item.href}` ? "underline decoration-8 underline-offset-8" : ""}`}
+                key={item.text}
+              >
                 <Link href={item.href}>{item.text}</Link>
               </li>
             ))}
