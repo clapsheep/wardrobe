@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Svg } from "@/components/atoms";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import SearchModal from "../SearchModal/SearchModal";
+import SearchModal from "./SearchModal";
 
 type THeader = {
   isScrolled: boolean;
