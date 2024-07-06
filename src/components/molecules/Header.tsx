@@ -5,6 +5,20 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { MobileHamburger, SearchModal } from "@/components/molecules";
 
+function MobileHeader() {
+  const [activeBurger, setActiveBurger] = useState<boolean>(false);
+  return activeBurger ? (
+    <MobileHamburger closeFn={() => setActiveBurger(false)} />
+  ) : (
+    <header className={`flex w-full justify-between px-5`}>
+      <Svg logo mobile size={127} />
+      <button onClick={() => setActiveBurger(true)}>
+        <Svg id="burger" />
+      </button>
+    </header>
+  );
+}
+
 type THeader = {
   isScrolled: boolean;
 };
@@ -25,20 +39,6 @@ const navItems = [
   { href: "/dressroom", text: "Dressroom" },
   { href: "/style", text: "Style" },
 ];
-
-function MobileHeader() {
-  const [activeBurger, setActiveBurger] = useState<boolean>(false);
-  return activeBurger ? (
-    <MobileHamburger closeFn={() => setActiveBurger(false)} />
-  ) : (
-    <header className={`flex w-full justify-between`}>
-      <Svg logo mobile size={127} />
-      <button onClick={() => setActiveBurger(true)}>
-        <Svg id="burger" />
-      </button>
-    </header>
-  );
-}
 
 function DesktopHeader({ isScrolled }: THeader) {
   const pathname = usePathname();
@@ -114,19 +114,27 @@ function DesktopHeader({ isScrolled }: THeader) {
 
 export default function Header() {
   const [scroll, setScroll] = useState(0);
+  const [screen, setScreen] = useState<string | null>(null);
   useEffect(() => {
     const handleScroll = () => {
       setScroll(window.scrollY);
     };
+    const handleResize = () => {
+      setScreen(window.innerWidth > 540 ? "desktop" : "mobile");
+    };
+    // 컴포넌트가 마운트될 때 초기 화면 크기 설정
+    handleResize();
+    window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
-  return (
-    <>
-      <DesktopHeader isScrolled={scroll !== 0} />
-      <MobileHeader />
-    </>
+
+  return screen === "mobile" ? (
+    <MobileHeader />
+  ) : (
+    <DesktopHeader isScrolled={scroll !== 0} />
   );
 }
