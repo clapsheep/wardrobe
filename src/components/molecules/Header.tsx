@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Svg } from "@/components/atoms";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import SearchModal from "./SearchModal";
+import { MobileHamburger, SearchModal } from "@/components/molecules";
 
 type THeader = {
   isScrolled: boolean;
@@ -26,7 +26,21 @@ const navItems = [
   { href: "/style", text: "Style" },
 ];
 
-function AppHeader({ isScrolled }: THeader) {
+function MobileHeader() {
+  const [activeBurger, setActiveBurger] = useState<boolean>(false);
+  return activeBurger ? (
+    <MobileHamburger closeFn={() => setActiveBurger(false)} />
+  ) : (
+    <header className={`flex w-full justify-between`}>
+      <Svg logo mobile size={127} />
+      <button onClick={() => setActiveBurger(true)}>
+        <Svg id="burger" />
+      </button>
+    </header>
+  );
+}
+
+function DesktopHeader({ isScrolled }: THeader) {
   const pathname = usePathname();
   const [isSearchState, setIsSearchState] = useState<boolean>(false);
   return (
@@ -109,5 +123,10 @@ export default function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  return <AppHeader isScrolled={scroll !== 0} />;
+  return (
+    <>
+      <DesktopHeader isScrolled={scroll !== 0} />
+      <MobileHeader />
+    </>
+  );
 }
