@@ -1,18 +1,21 @@
-import { getFullList, getOneUser } from "@/utils/api";
+import { TagInput } from "@/components/atoms";
 
 export default async function Page() {
-  const users = await getFullList("user");
-  const user = await getOneUser("667bb72fdaff012e07bebfef");
-
   return (
-    <div>
-      <ul>
-        {users.map((user) => {
-          return <li key={user._id}>{user.username}</li>;
-        })}
-      </ul>
-
-      <p>유저 하나만{user.username}</p>
+    <div className="flex gap-4">
+      <TagInput id="name" name="name" type="checkbox">
+        체크박스
+      </TagInput>
+      <div className="flex flex-col gap-4">
+        <div className="flex">
+          <TagInput type="radio" name="season" id="spring">
+            봄
+          </TagInput>
+          <TagInput type="radio" name="season" id="authmn">
+            가을
+          </TagInput>
+        </div>
+      </div>
     </div>
   );
 }
