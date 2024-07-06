@@ -24,7 +24,22 @@ export default function Svg({
   ...restProps
 }: SVGProps) {
   const iconStyles = { width: width ?? size, height: height ?? size, color };
-
+  const hasLogo = id.includes("logo");
+  const hasMobile = id.includes("mobile");
+  if (hasLogo) {
+    if (hasMobile) {
+      return (
+        <svg width={127} height={24}>
+          <use href={`/svg/_sprite.svg#logo-mobile_Black`} />
+        </svg>
+      );
+    }
+    return (
+      <svg width={255} height={60}>
+        <use href={`/svg/_sprite.svg#logo-web_Black`} />
+      </svg>
+    );
+  }
   return (
     <svg
       aria-hidden="true"

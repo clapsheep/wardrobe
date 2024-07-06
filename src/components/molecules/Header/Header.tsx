@@ -13,7 +13,7 @@ const userMenuItems = () => {
   const isLogin = false;
   return [
     { href: "/", iconId: "person", text: "Profile" },
-    { href: "/", iconId: "bookmark", text: "Bookmark" },
+    { href: "/", iconId: "bookmark_false", text: "Bookmark" },
     isLogin
       ? { href: "/", iconId: "log-out", text: "Logout" }
       : { href: "/", iconId: "log-in", text: "Login" },
@@ -46,7 +46,7 @@ function AppHeader({ isScrolled }: THeader) {
         </ul>
       )}
       <nav>
-        <ul className="flex grid grid-cols-7 grid-rows-1 items-center text-h-2-bold">
+        <ul className="grid grid-cols-7 grid-rows-1 items-center text-h-2-bold">
           <div className="col-span-2 col-start-1 flex gap-[42px]">
             {navItems.map((item) => (
               <li key={item.text}>
@@ -56,7 +56,7 @@ function AppHeader({ isScrolled }: THeader) {
           </div>
           <li className="col-span-1 col-start-4 mx-auto max-w-full">
             <Link className="w-[265px] max-w-full" href="/">
-              <Svg mobile logo size={265} />
+              <Svg id="logo-web_Black" />
             </Link>
           </li>
           <ul
