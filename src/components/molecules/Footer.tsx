@@ -8,7 +8,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="text-b-3-regular mobile:px-[20px] w-full px-[85px] text-gray-800">
+    <footer className="w-full px-[85px] text-b-3-regular text-gray-800 mobile:px-[20px]">
       <nav className="border-y border-gray-200 py-5">
         <ul className="flex gap-16">
           <li className={`${style.li} `}>
@@ -50,7 +50,7 @@ export default function Footer() {
             이용약관
           </Link>
         </div>
-        <address className="mobile:flex flex-col not-italic text-gray-500">
+        <address className="flex-col not-italic text-gray-500 mobile:flex">
           <span>상호명 : wardrobe </span>
           <span>소재지 : 서울특별시 종로구 종로3길 17 </span>
           <Link href="mailto:localhost1101@naver.com">
