@@ -41,9 +41,9 @@ export default function MobileHamburger({ closeFn }: TMobileHamburger) {
   return (
     <div className="flex h-svh flex-col gap-[106px] bg-gray-900 p-[20px] font-sans">
       <div className="flex justify-between">
-        <Svg logo mobile color="white" size={127} />
+        <Svg id="logo-mobile_white" />
         <button onClick={closeFn}>
-          <Svg id="cancel" color="white" size={28} />
+          <Svg id="cancel" color="#FFFFFF" />
         </button>
       </div>
       <nav>
@@ -56,7 +56,7 @@ export default function MobileHamburger({ closeFn }: TMobileHamburger) {
                 onClick={closeFn}
               >
                 {text}
-                <Svg id="arrow-right" color="white" size={28} />
+                <Svg id="arrow-right" color="#FFFFFF" />
               </Link>
             </li>
           ))}

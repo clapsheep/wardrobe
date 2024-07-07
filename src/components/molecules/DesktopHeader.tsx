@@ -61,7 +61,7 @@ export default function DesktopHeader({ isScrolled }: THeader) {
           </div>
           <li className="col-span-1 col-start-4 mx-auto max-w-full">
             <Link className="w-[265px] max-w-full" href="/">
-              <Svg mobile logo size={265} />
+              <Svg id="logo-web_Black" />
             </Link>
           </li>
           <ul

@@ -10,7 +10,7 @@ export default function MobileHeader() {
     <MobileHamburger closeFn={() => setActiveBurger(false)} />
   ) : (
     <header className={`flex w-full justify-between px-5`}>
-      <Svg logo mobile size={127} />
+      <Svg id="logo-mobile_Black" />
       <button onClick={() => setActiveBurger(true)}>
         <Svg id="burger" />
       </button>
