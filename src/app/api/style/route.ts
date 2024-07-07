@@ -6,6 +6,7 @@ export const GET = async () => {
   try {
     await dbConnect();
     const list = await Style.aggregate([{ $sample: { size: 10 } }]);
+
     return Response.json({ list });
   } catch (error: any) {
     return Response.json({ error: error.message });
