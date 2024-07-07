@@ -1,10 +1,8 @@
+"use client";
 import Link from "next/link";
 import { Svg } from "@/components/atoms";
+import { usePathname } from "next/navigation";
 
-interface MenuType {
-  href: string;
-  text: string;
-}
 const sitemap = {
   main: () => {
     return [
@@ -26,24 +24,20 @@ const sitemap = {
   },
 };
 
-function MobileSiteMapItem({ text, href }: MenuType) {
-  return (
-    <li>
-      <Link
-        className="flex justify-between hover:text-h-3-semibold hover:underline hover:decoration-white"
-        href={href}
-      >
-        {text}
-        <Svg id="arrow-right" color="white" size={28} />
-      </Link>
-    </li>
-  );
-}
 interface TMobileHamburger {
   closeFn: () => void;
 }
 
 export default function MobileHamburger({ closeFn }: TMobileHamburger) {
+  const pathname = usePathname();
+  //사용은 안 하지만 , 페이지 작업이 됐을때 확인 후 유지할지 결정
+  const handleLink = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href === pathname) {
+      e.preventDefault();
+      closeFn();
+    }
+    closeFn();
+  };
   return (
     <div className="flex h-svh flex-col gap-[106px] bg-gray-900 p-[20px] font-sans">
       <div className="flex justify-between">
@@ -55,7 +49,16 @@ export default function MobileHamburger({ closeFn }: TMobileHamburger) {
       <nav>
         <ul className="flex flex-col gap-[64px] text-h-3-regular text-gray-200">
           {sitemap["main"]().map(({ text, href }) => (
-            <MobileSiteMapItem key={text} text={text} href={href} />
+            <li key={text}>
+              <Link
+                className="flex justify-between hover:text-h-3-semibold hover:underline hover:decoration-white"
+                href={href}
+                onClick={closeFn}
+              >
+                {text}
+                <Svg id="arrow-right" color="white" size={28} />
+              </Link>
+            </li>
           ))}
         </ul>
       </nav>
