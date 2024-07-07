@@ -51,7 +51,13 @@ export const UserSchema = new Schema(
   {
     username: { type: String, required: true, unique: true },
     password: { type: String, minLength: 8, require: true },
-    userInfo: { weight: { type: Number }, height: { type: Number } },
+    image: { type: String },
+    userInfo: {
+      weight: { type: Number },
+      height: { type: Number },
+      top: { type: String },
+      bottom: { type: String },
+    },
     dressroom: [{ type: DressroomItemSchema }],
     styles: [{ type: UserStyleSchema }],
     // styles: [{ type: Types.ObjectId, ref: "style" }],

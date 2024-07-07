@@ -5,8 +5,9 @@ interface Mongo {
 }
 interface User {
   username: string;
-  passward: string;
-  userInfo: { weight: number; hieght: number };
+  password: string;
+  image: string;
+  userInfo: { weight: number; height: number; top: string; bottom: string };
   dressroom: TDressroom[];
   styles: String;
   bookmark: String;
