@@ -1,3 +1,24 @@
-export default function Home() {
-  return <h1>welcome to wardrobe!</h1>;
+import { MainCarousel } from "@/components/molecules";
+
+const { MONGO_API } = process.env;
+
+export default async function Home() {
+  const res = await fetch(`${MONGO_API}/style`);
+  const { list } = await res.json();
+
+  return (
+    <>
+      <section className="mt-16">
+        <p className="mx-[85px] text-[80px] font-extralight leading-[135%] tracking-[-0.05em] [word-spacing:30px]">
+          TRY{" "}
+          <strong className="font-semibold">
+            MATCHING <br />
+            WITH
+          </strong>{" "}
+          YOUR WARDROBE
+        </p>
+        <MainCarousel list={list} />
+      </section>
+    </>
+  );
 }
