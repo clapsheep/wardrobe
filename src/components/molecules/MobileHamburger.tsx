@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 import { Svg } from "@/components/atoms";
 import { usePathname } from "next/navigation";
+import { SearchModal } from "@/components/molecules";
 
 const sitemap = {
   main: () => {
@@ -29,6 +31,9 @@ interface TMobileHamburger {
 }
 
 export default function MobileHamburger({ closeFn }: TMobileHamburger) {
+  const [isSearchState, setIsSearchState] = useState(false);
+  //로그인 상태 확인 (수정필)
+  const isLogin = true;
   const pathname = usePathname();
   //사용은 안 하지만 , 페이지 작업이 됐을때 확인 후 유지할지 결정
   const handleLink = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -63,14 +68,27 @@ export default function MobileHamburger({ closeFn }: TMobileHamburger) {
         </ul>
       </nav>
       <ul className="mt-auto flex justify-between text-b-0-semibold text-gray-300">
-        {sitemap["sub"]().map(({ text, href }) => (
-          <li
-            className="hover:text-b-0-bold hover:text-white hover:underline hover:decoration-white"
-            key={text}
-          >
-            <Link href={href}>{text}</Link>
-          </li>
-        ))}
+        <li className="hover:text-b-0-bold hover:text-white hover:underline hover:decoration-white">
+          {isLogin ? (
+            <button>Logout</button>
+          ) : (
+            <Link href={"/bookmark"}>Login</Link>
+          )}
+        </li>
+        <li className="hover:text-b-0-bold hover:text-white hover:underline hover:decoration-white">
+          <Link href={"/bookmark"}>Bookmark</Link>
+        </li>
+        <li className="hover:text-b-0-bold hover:text-white hover:underline hover:decoration-white">
+          <button onClick={() => setIsSearchState(true)}>Search</button>
+        </li>
+        {isSearchState ? (
+          <SearchModal
+            closeFn={() => setIsSearchState(false)}
+            open={isSearchState}
+          />
+        ) : (
+          ""
+        )}
       </ul>
     </div>
   );
