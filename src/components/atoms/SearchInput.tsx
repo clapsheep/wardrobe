@@ -32,7 +32,7 @@ export default function SearchInput({ className, setList }: TSearchInput) {
   return (
     <form
       onSubmit={handleSearchLists}
-      className={`relative h-[80px] w-[50%] mobile:w-full ${className}`}
+      className={`relative h-[80px] w-full mobile:h-12 mobile:w-full ${className}`}
     >
       <label htmlFor="search"></label>
       <input
@@ -41,10 +41,13 @@ export default function SearchInput({ className, setList }: TSearchInput) {
         autoComplete="off"
         name="search"
         placeholder="상품명 또는 #태그명으로 검색하세요"
-        className="placholder:text-gray-300 h-[80px] w-full border-b-[7px] border-black bg-transparent text-h-1-regular mobile:border-b-[5px] mobile:text-h-4-regular"
+        className="placholder:text-gray-300 md:text-h-3-regular md:text-h-3-regular h-[80px] w-full border-b-[7px] border-black bg-transparent text-h-1-regular mobile:h-12 mobile:border-b-[5px] mobile:text-h-4-regular"
       />
-      <button className="absolute bottom-[25%] right-0">
+      <button className="absolute bottom-[25%] right-0 mobile:hidden">
         <Svg id="search" size={50} />
+      </button>
+      <button className="absolute bottom-[25%] right-0 hidden mobile:inline-block">
+        <Svg id="search" size={40} />
       </button>
     </form>
   );
