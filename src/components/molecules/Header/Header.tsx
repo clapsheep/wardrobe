@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
 import { Svg } from "@/components/atoms";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
-import { MobileHamburger, SearchModal } from "@/components/molecules";
+import { useState, useEffect } from "react";
+import SearchModal from "../SearchModal/SearchModal";
 
 type THeader = {
   isScrolled: boolean;
@@ -13,21 +12,20 @@ const userMenuItems = () => {
   // 로그인여부 전역상태관리 지정후 수정 필요
   const isLogin = false;
   return [
-    { href: "/profile", iconId: "person", text: "Profile" },
-    { href: "/bookmark", iconId: "bookmark_false", text: "Bookmark" },
+    { href: "/", iconId: "person", text: "Profile" },
+    { href: "/", iconId: "bookmark_false", text: "Bookmark" },
     isLogin
-      ? { href: "/logout", iconId: "log-out", text: "Logout" }
-      : { href: "/login", iconId: "log-in", text: "Login" },
+      ? { href: "/", iconId: "log-out", text: "Logout" }
+      : { href: "/", iconId: "log-in", text: "Login" },
   ];
 };
 
 const navItems = [
-  { href: "/dressroom", text: "Dressroom" },
-  { href: "/style", text: "Style" },
+  { href: "/", text: "Dressroom" },
+  { href: "/", text: "Style" },
 ];
 
-export default function DesktopHeader({ isScrolled }: THeader) {
-  const pathname = usePathname();
+function AppHeader({ isScrolled }: THeader) {
   const [isSearchState, setIsSearchState] = useState<boolean>(false);
   return (
     <header
@@ -39,7 +37,7 @@ export default function DesktopHeader({ isScrolled }: THeader) {
         <ul className="font-gray-800 flex justify-end gap-4 text-center text-b-0-regular">
           {userMenuItems().map((item) => (
             <li key={item.iconId}>
-              <Link href={item.href} className={`flex items-center gap-1`}>
+              <Link href={item.href} className="flex items-center gap-1">
                 <Svg id={item.iconId} size={18} />
                 {item.text}
               </Link>
@@ -48,13 +46,10 @@ export default function DesktopHeader({ isScrolled }: THeader) {
         </ul>
       )}
       <nav>
-        <ul className="flex grid grid-cols-7 grid-rows-1 items-center text-h-2-bold">
+        <ul className="grid grid-cols-7 grid-rows-1 items-center text-h-2-bold">
           <div className="col-span-2 col-start-1 flex gap-[42px]">
             {navItems.map((item) => (
-              <li
-                className={`${pathname === `${item.href}` ? "underline decoration-8 underline-offset-8" : ""}`}
-                key={item.text}
-              >
+              <li key={item.text}>
                 <Link href={item.href}>{item.text}</Link>
               </li>
             ))}
@@ -96,4 +91,18 @@ export default function DesktopHeader({ isScrolled }: THeader) {
       )}
     </header>
   );
+}
+
+export default function Header() {
+  const [scroll, setScroll] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScroll(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  return <AppHeader isScrolled={scroll !== 0} />;
 }
