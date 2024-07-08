@@ -14,7 +14,7 @@ const userMenuItems = () => {
   const isLogin = false;
   return [
     { href: "/profile", iconId: "person", text: "Profile" },
-    { href: "/bookmark", iconId: "bookmark", text: "Bookmark" },
+    { href: "/bookmark", iconId: "bookmark_false", text: "Bookmark" },
     isLogin
       ? { href: "/logout", iconId: "log-out", text: "Logout" }
       : { href: "/login", iconId: "log-in", text: "Login" },
