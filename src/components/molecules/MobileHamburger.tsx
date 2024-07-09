@@ -44,7 +44,7 @@ export default function MobileHamburger({ closeFn }: TMobileHamburger) {
     closeFn();
   };
   return (
-    <div className="flex h-svh flex-col gap-[106px] bg-gray-900 p-[20px] font-sans">
+    <dialog className="fixed inset-0 z-10 flex h-svh w-full flex-col gap-[106px] bg-gray-900 p-[20px] font-sans">
       <div className="flex justify-between">
         <Svg id="logo-mobile_white" />
         <button onClick={closeFn}>
@@ -90,6 +90,6 @@ export default function MobileHamburger({ closeFn }: TMobileHamburger) {
           ""
         )}
       </ul>
-    </div>
+    </dialog>
   );
 }
