@@ -7,6 +7,10 @@
     <symbol id="arrow-right" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M9 3L19.3794 13.3794C19.4601 13.4552 19.5245 13.5467 19.5684 13.6483C19.6124 13.7499 19.6351 13.8594 19.6351 13.9701C19.6351 14.0808 19.6124 14.1903 19.5684 14.2919C19.5245 14.3935 19.4601 14.485 19.3794 14.5608L9 24.9402" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
+    <symbol id="arrow-up-right" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 17.5L17 7.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7 7.5H17V17.5" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
     <symbol id="bookmark_false" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M23.9173 24.5L14.0007 18.6667L4.08398 24.5V5.83333C4.08398 5.21449 4.3825 4.621 4.91385 4.18342C5.4452 3.74583 6.16587 3.5 6.91732 3.5H21.084C21.8354 3.5 22.5561 3.74583 23.0875 4.18342C23.6188 4.621 23.9173 5.21449 23.9173 5.83333V24.5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
