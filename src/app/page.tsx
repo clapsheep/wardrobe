@@ -9,6 +9,7 @@ export default async function Home() {
   return (
     <>
       <section className="mt-16">
+        <h1 className="sr-only">프로모션</h1>
         <p className="mx-[85px] text-[80px] font-extralight leading-[135%] tracking-[-0.05em] [word-spacing:30px]">
           TRY{" "}
           <strong className="font-semibold">
