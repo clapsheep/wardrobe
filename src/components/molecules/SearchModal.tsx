@@ -38,7 +38,7 @@ export default function SearchModal({
   }, []);
   return (
     <dialog
-      className={`bg-none fixed inset-0 z-10 flex h-svh w-full flex-col items-end bg-opacity-50 p-[82px] font-sans mobile:p-10 ${className}`}
+      className={`bg-none fixed inset-0 z-10 flex h-full w-full flex-col items-end bg-opacity-50 p-[82px] font-sans mobile:p-10 ${className}`}
       open={open}
     >
       <button onClick={closeFn} className="pb-[53px] mobile:hidden">
