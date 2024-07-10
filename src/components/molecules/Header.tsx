@@ -39,7 +39,8 @@ export default function Header() {
 
   return (
     <>
-      <header className="hidden w-full mobile:inline-block mobile:flex mobile:justify-between">
+      {/* 모바일 헤더 */}
+      <header className="hidden w-full px-2 mobile:inline-block mobile:flex mobile:justify-between">
         <Link href="/">
           <Svg id="logo-mobile_Black" />
         </Link>
@@ -56,7 +57,8 @@ export default function Header() {
       ) : (
         ""
       )}
-      <header className="font-gray-800 w-full font-sans my-1">
+      {/* 데스크톱 헤더 */}
+      <header className="my-5 w-full font-sans text-gray-800">
         <nav className="flex w-screen items-center justify-between px-20 mobile:px-1">
           <ul className="flex justify-between gap-10 text-h-2-bold mobile:hidden">
             {navItems.map((item) => (
@@ -74,29 +76,31 @@ export default function Header() {
           <div
             className={`flex mobile:hidden ${scroll ? "items-start gap-2" : "flex-col items-end"}`}
           >
-            <ul className={`flex gap-3 ${scroll ? "justify-start gap-4" : ""}`}>
+            <ul
+              className={`flex gap-3 text-b-0-regular ${scroll ? "justify-start gap-4 pr-12" : ""}`}
+            >
               <li>
-                <Link className="flex" href="/profile">
+                <Link className="flex items-center gap-1" href="/profile">
                   <Svg id="person" size={scroll ? 28 : 18} />
-                  <span className={`${scroll ? "sr-only" : ""}`}>profile</span>
+                  <span className={`${scroll ? "sr-only" : ""}`}>Profile</span>
                 </Link>
               </li>
               <li>
-                <Link className="flex" href="/profile/bookmark">
+                <Link className="flex items-center gap-1" href="/profile/bookmark">
                   <Svg id="bookmark_false" size={scroll ? 28 : 18} />
-                  <span className={`${scroll ? "sr-only" : ""}`}>bookmark</span>
+                  <span className={`${scroll ? "sr-only" : ""}`}>Bookmark</span>
                 </Link>
               </li>
               {isLogin ? (
                 <li>
-                  <button className="flex">
+                  <button className="flex items-center gap-1">
                     <Svg id="log-out" size={scroll ? 28 : 18} />
                     <span className={`${scroll ? "sr-only" : ""}`}>Logout</span>
                   </button>
                 </li>
               ) : (
                 <li>
-                  <Link className="flex" href="/login">
+                  <Link className="flex items-center gap-1" href="/login">
                     <Svg id="log-in" size={scroll ? 28 : 18} />
                     <span className={`${scroll ? "sr-only" : ""}`}>Login</span>
                   </Link>
