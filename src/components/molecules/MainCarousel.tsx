@@ -9,7 +9,7 @@ import { TStyle } from "@/types/DatabaseTypes";
 const MainCarousel = ({ list }: { list: TStyle[] }) => {
   return (
     <Swiper
-      className="w-full bg-slate-600"
+      className="w-full"
       spaceBetween={10}
       slidesPerView={5}
       loop={true}
