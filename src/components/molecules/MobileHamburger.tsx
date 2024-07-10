@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Svg } from "@/components/atoms";
 import { usePathname } from "next/navigation";
-import { SearchModal } from "@/components/molecules";
 
 const sitemap = {
   main: () => {
@@ -28,10 +27,15 @@ const sitemap = {
 
 interface TMobileHamburger {
   closeFn: () => void;
+  isSearchState: boolean;
+  handleSearchState: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function MobileHamburger({ closeFn }: TMobileHamburger) {
-  const [isSearchState, setIsSearchState] = useState(false);
+export default function MobileHamburger({
+  closeFn,
+  isSearchState,
+  handleSearchState,
+}: TMobileHamburger) {
   //로그인 상태 확인 (수정필)
   const isLogin = true;
   const pathname = usePathname();
@@ -44,7 +48,7 @@ export default function MobileHamburger({ closeFn }: TMobileHamburger) {
     closeFn();
   };
   return (
-    <dialog className="fixed inset-0 z-10 flex h-svh w-full flex-col gap-[106px] bg-gray-900 p-[20px] font-sans">
+    <dialog className="fixed inset-0 z-10 flex h-full w-full flex-col gap-[106px] bg-gray-900 px-[20px] font-sans">
       <div className="flex justify-between">
         <Svg id="logo-mobile_white" />
         <button onClick={closeFn}>
@@ -79,16 +83,8 @@ export default function MobileHamburger({ closeFn }: TMobileHamburger) {
           <Link href={"/bookmark"}>Bookmark</Link>
         </li>
         <li className="hover:text-b-0-bold hover:text-white hover:underline hover:decoration-white">
-          <button onClick={() => setIsSearchState(true)}>Search</button>
+          <button onClick={() => handleSearchState(true)}>Search</button>
         </li>
-        {isSearchState ? (
-          <SearchModal
-            closeFn={() => setIsSearchState(false)}
-            open={isSearchState}
-          />
-        ) : (
-          ""
-        )}
       </ul>
     </dialog>
   );
