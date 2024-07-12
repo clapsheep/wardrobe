@@ -29,7 +29,7 @@ const BasicButton = ({
     xs: "h-6 w-full text-b-4-regular",
     sm: "h-9 w-full text-b-2-regular",
     md: "h-[52px] w-full text-b-0-regular",
-    lg: "h-16 w-full text-h-4-regular",
+    lg: "h-16 w-full text-b-0-regular",
   };
   const colorStyle = {
     primary: "bg-black text-white",
