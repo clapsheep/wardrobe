@@ -13,7 +13,7 @@ export const GET = async (
       return Response.json({ error: "유효하지 않은 Id 입니다." });
     }
     const user = await User.findOne({ _id: userId });
-    return Response.json({ user });
+    return Response.json(user);
   } catch (error: any) {
     return Response.json({ error: error.message });
   }
