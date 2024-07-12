@@ -24,11 +24,14 @@ export const GET = async (
 
     const styles = await Promise.all(
       getShuffleFiveItems.map(async (product: { id: string; name: string }) => {
-        console.log(product.name);
         const style = await Style.find({
           product: product.id,
         }).limit(7);
-        const data = { name: product.name, style: style };
+        const data = {
+          name: product.name,
+          productId: product.id,
+          style: style,
+        };
         return data;
       }),
     );

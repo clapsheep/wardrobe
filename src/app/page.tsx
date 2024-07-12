@@ -1,8 +1,6 @@
 import { MainCarousel } from "@/components/molecules";
 import { RecommendStyleByItem } from "@/components/organism";
 
-const { MONGO_API } = process.env;
-
 export default async function Home() {
   const { MONGO_API } = process.env;
 
@@ -14,10 +12,8 @@ export default async function Home() {
     fetch(`${MONGO_API}/user/${userId}/style/recommend`, { cache: "no-store" }),
     fetch(`${MONGO_API}/user/${userId}`, { cache: "no-store" }),
   ]);
-  const [list, recommendStyleFromDressroom, user] = await Promise.all(
-    res.map((i) => i.json()),
-  );
-  console.log(user);
+  const [randomStyleList, recommendStyleFromDressroom, user] =
+    await Promise.all(res.map((i) => i.json()));
 
   return (
     <>
@@ -31,7 +27,7 @@ export default async function Home() {
           </strong>{" "}
           YOUR WARDROBE
         </p>
-        <MainCarousel list={list} />
+        <MainCarousel list={randomStyleList} />
         <section className="mx-[85px] mt-[164px] flex flex-col">
           <h1 className="sr-only">코디 추천</h1>
           <p className="text-h-3-semibold">
@@ -41,7 +37,9 @@ export default async function Home() {
           <p className="mb-12 text-h-1-bold">
             다른 사람들은 어떻게 코디했을까요?
           </p>
-          <RecommendStyleByItem data={recommendStyleFromDressroom} />
+          <ul>
+            <RecommendStyleByItem data={recommendStyleFromDressroom} />
+          </ul>
         </section>
       </section>
     </>
