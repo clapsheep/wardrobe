@@ -1,35 +1,46 @@
 import { BasicButton, BasicInput } from "@/components/atoms";
 
 const LoginPage = () => {
+  const loginAction = async (formData: FormData) => {
+    "use server";
+    const loginFormData = {
+      username: formData.get("username"),
+      password: formData.get("password"),
+    };
+    console.log(loginFormData.username, loginFormData.password);
+  };
+
   return (
-    <main className="mx-auto my-0 flex w-[440px] flex-col items-center justify-center py-[50px]">
+    <main className="mx-auto my-0 flex max-w-[480px] flex-col items-center justify-center px-5 py-[50px]">
       <h1 className="inline-block w-full border-b-4 border-black pb-4 text-center text-h-1-regular">
         로그인
       </h1>
-      <form className="w-full">
+      <form className="w-full" action={loginAction}>
         <BasicInput
           type="text"
-          // label="아이디"
-          placeholder="아이디(이메일)을 입력하세요."
+          placeholder="아이디를 입력하세요."
           className="my-4 h-12"
-          id="userId"
+          id="username"
         />
         <BasicInput
           type="password"
-          // label="비밀번호"
           placeholder="비밀번호를 입력하세요."
-          className="my-4 h-12"
+          className="my-2 h-12"
           id="password"
         />
-        <BasicButton type="submit" size="lg" color="primary">
+        {/* <span className="text-b-3-regular text-accent-red">
+          아이디와 비밀번호를 확인해주세요.
+        </span> */}
+        <BasicButton className="mt-2" type="submit" size="lg" color="primary">
           로그인 하기
         </BasicButton>
       </form>
+
       <BasicButton
         className="mt-4 rounded-full"
         size="lg"
         color="secondary"
-        href="/"
+        href="/join"
       >
         간편 회원가입하기
       </BasicButton>
