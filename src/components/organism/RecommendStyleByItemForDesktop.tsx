@@ -2,32 +2,39 @@ import { TStyle } from "@/types/DatabaseTypes";
 import { Svg } from "@/components/atoms";
 import Image from "next/image";
 import Link from "next/link";
+import "swiper/css";
 
-const RecommendStyleByItem = async ({
+const RecommendStyleByItemForDesktop = ({
   data,
 }: {
   data: { name: string; productId: string; style: TStyle[] }[];
 }) => {
   return data.map((item) => {
     return (
-      <li key={item.name} className="pb-[138px]">
-        <p className="flex w-full justify-between border-b-2 p-4 pb-[18px]">
-          <span className="text-h-3-regular text-gray-450">{item.name}</span>
+      <li key={item.name} className="pb-[138px] mobile:pb-10">
+        <p className="flex w-full items-center justify-between border-b-2 pb-2">
+          <span className="mobile:text-b-regular overflow-hidden text-ellipsis whitespace-nowrap text-h-5-regular text-gray-450">
+            {item.name}
+          </span>
           <Link
-            className="flex text-b-0-regular"
+            className="ml-2 flex items-center whitespace-nowrap mobile:text-b-2-regular"
             href={`/style/${item.productId}`}
           >
             SEARCH ALL
             <Svg id="arrow-up-right" size={28} />
           </Link>
         </p>
-        <ul className="mt-6 flex h-[264px] w-full gap-[35px]">
+        <ul className="mt-6 flex justify-start gap-4 mobile:gap-2">
           {item.style.map((style) => {
             return (
-              <li key={style._id}>
-                <figure className="relative h-[264px] w-[220px]">
+              <li
+                key={style._id}
+                className="w-[calc(25%-1rem)] min-w-[150px] max-w-[220px]"
+              >
+                <figure className="relative w-full pt-[120%]">
                   <Image
                     className="object-cover"
+                    sizes="(max-width:540px) 100vw"
                     fill
                     src={style.image}
                     alt=""
@@ -44,4 +51,5 @@ const RecommendStyleByItem = async ({
     );
   });
 };
-export default RecommendStyleByItem;
+
+export default RecommendStyleByItemForDesktop;

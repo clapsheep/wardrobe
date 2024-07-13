@@ -37,6 +37,7 @@ const BasicInput = ({ id, type, placeholder, label, className }: Tinput) => {
       </label>
       <input
         id={id}
+        name={id}
         type={inputTypeState}
         className="h-full w-full rounded-sm border border-gray-300 px-[14px] py-[10px] text-b-2-regular placeholder:text-gray-300"
         placeholder={placeholder}
@@ -55,7 +56,7 @@ const BasicInput = ({ id, type, placeholder, label, className }: Tinput) => {
           onClick={handleVisibility}
         >
           <Svg
-            size={28}
+            size={24}
             id={
               inputTypeState === "password" ? "visibility_on" : "visibility_off"
             }

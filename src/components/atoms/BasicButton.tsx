@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
 import React from "react";
+import { useFormStatus } from "react-dom";
 
 interface Tbutton {
   type?: "submit" | "button";
@@ -37,6 +39,8 @@ const BasicButton = ({
     disabled: "bg-gray-200 text-gray-400",
   };
 
+  const { pending } = useFormStatus();
+
   if (!disabled) {
     if (href) {
       return (
@@ -54,10 +58,10 @@ const BasicButton = ({
       <button
         type={type}
         onClick={onClick}
-        disabled={disabled}
+        disabled={disabled || pending}
         className={`${!disabled ? colorStyle[color] : colorStyle["disabled"]} ${sizeStyle[size]} ${round ? "rounded" : ""} ${shadow ? "shadow-lg" : ""} ${className}`}
       >
-        {children}
+        {pending ? "로그인 중입니다." : children}
       </button>
     );
   }
