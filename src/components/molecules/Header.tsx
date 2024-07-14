@@ -24,7 +24,7 @@ export default function Header() {
     };
   }, []);
 
-  const isLogin = true;
+  const isLogin = false;
 
   const navItems = [
     { href: "/dressroom", text: "Dressroom" },
@@ -34,7 +34,9 @@ export default function Header() {
   return (
     <>
       {/* 모바일 헤더 */}
-      <header className="sticky top-0 hidden w-full bg-white px-2 mobile:inline-block mobile:flex mobile:justify-between">
+      <header
+        className={`mobile:items-center sticky top-0 z-10 hidden h-12 w-full bg-white px-2 mobile:inline-block mobile:flex mobile:justify-between`}
+      >
         <Link href="/">
           <Svg id="logo-mobile_Black" />
         </Link>
@@ -53,9 +55,9 @@ export default function Header() {
       )}
       {/* 데스크톱 헤더 */}
       <header
-        className={`sticky top-0 z-10 my-5 w-full bg-white font-sans text-gray-800 ${scroll ? "h-28" : "h-36"}`}
+        className={`sticky top-0 z-10 my-5 w-full bg-white font-sans text-gray-800 mobile:hidden ${scroll ? "h-28" : "h-36"}`}
       >
-        <nav className="flex h-full w-screen items-center justify-between px-20 mobile:px-1">
+        <nav className="relative flex h-full w-screen items-center justify-between px-20 mobile:px-1">
           <ul className="flex justify-between gap-10 text-h-2-bold mobile:hidden">
             {navItems.map((item) => (
               <li
@@ -66,7 +68,10 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <Link className="max-w-full mobile:hidden" href="/">
+          <Link
+            className="absolute left-[45%] max-w-full mobile:hidden"
+            href="/"
+          >
             <Svg id="logo-web_Black" />
           </Link>
           <div
@@ -111,7 +116,7 @@ export default function Header() {
             </button>
           </div>
         </nav>
-      </header>{" "}
+      </header>
       {isSearchState ? (
         <SearchModal
           closeFn={() => setIsSearchState(false)}
