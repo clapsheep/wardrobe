@@ -16,7 +16,7 @@ const Checkbox = ({ id, children, type, className, ...rest }: TCheckbox) => {
         id={id}
         className={`peer appearance-none`}
         type="checkbox"
-        {...rest}
+        aria-describedby={id}        {...rest}
       />
       <svg
         width="12"
@@ -33,7 +33,7 @@ const Checkbox = ({ id, children, type, className, ...rest }: TCheckbox) => {
         />
       </svg>
       <span
-        className={`point-cursor before:content[' '] flex items-center text-b-2-regular before:mr-2 before:inline-block before:h-5 before:w-5 peer-checked:text-b-2-semibold ${typeStyle[`${type}`]}`}
+        className={`point-cursor before:content[' '] flex items-center text-b-2-regular before:mr-2 before:inline-block before:h-5 before:w-5 peer-checked:text-b-2-semibold peer-checked:after:sr-only peer-checked:after:content-['선택됨'] ${typeStyle[`${type}`]}`}
       >
         {children}
       </span>
