@@ -23,7 +23,7 @@ interface PageProps {
 
 const ProfilePage = async ({ params }: PageProps) => {
   const data: TUser | null = await getOneUser(params.id);
-  console.log("data: ", data);
+  console.log(data);
 
   if (!data) {
     notFound();
