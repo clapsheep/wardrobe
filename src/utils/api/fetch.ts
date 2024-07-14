@@ -8,8 +8,7 @@ export const getFullList = async (
   collection: TCollection,
 ): Promise<TUser[]> => {
   const res = await fetch(`${MONGO_API}/${collection}`, { cache: "no-cache" });
-  const { list } = await res.json();
-  console.log(list);
+  const list = await res.json();
 
   return list;
 };
@@ -21,7 +20,7 @@ export const getOneUser = async (userId: string): Promise<TUser> => {
   const res = await fetch(`${MONGO_API}/user/${userId}`, {
     cache: "no-cache",
   });
-  const { user } = await res.json();
+  const user = await res.json();
   return user;
 };
 
