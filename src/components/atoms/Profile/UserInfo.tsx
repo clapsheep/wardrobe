@@ -1,13 +1,11 @@
-interface UserInfoProps {
-  height: number;
-  weight: number;
-  // topSize: number;
-  // bottomSize: number;
+import { TUser } from "@/types/DatabaseTypes";
 
+interface UserInfoProps {
+  user: TUser;
   sizeType: "large" | "small";
 }
 
-function UserInfo({ height, weight, sizeType }: UserInfoProps) {
+function UserInfo({ user, sizeType }: UserInfoProps) {
   const style = {
     textSize: sizeType === "large" ? "text-b-0-regular" : "text-b-2-regular",
     margin: sizeType === "large" ? "mt-4 mb-9" : "mt-[2px]",
@@ -21,15 +19,20 @@ function UserInfo({ height, weight, sizeType }: UserInfoProps) {
       >
         정보
       </li>
-      <li>{height}cm</li>
+      <li>{user.userInfo.height}cm</li>
       <li className="mx-2" aria-hidden="true">
         ・
       </li>
-      <li>{weight}kg</li>
-      {/* <li className="mx-2 bg-gray-300 w-[1px] h-4 self-center" aria-hidden="true"></li>
-      <li>상의 {topSize}</li>
-      <li className="mx-2" aria-hidden="true">・</li>
-      <li>하의 {bottomSize}</li> */}
+      <li>{user.userInfo.weight}kg</li>
+      <li
+        className="mx-2 h-4 w-[1px] self-center bg-gray-300"
+        aria-hidden="true"
+      ></li>
+      <li>상의 {user.userInfo.top}</li>
+      <li className="mx-2" aria-hidden="true">
+        ・
+      </li>
+      <li>하의 {user.userInfo.bottom}</li>
     </ul>
   );
 }
