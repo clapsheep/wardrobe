@@ -11,7 +11,7 @@ const Checkbox = ({ id, children, type, className, ...rest }: TCheckbox) => {
     seperate: "peer-checked:before:text-b-2-semibold",
   };
   return (
-    <label htmlFor={id} className={`relative flex ${className}`}>
+    <label htmlFor={id}  tabIndex={1} className={`relative flex cursor-pointer ${className}`}>
       <input
         id={id}
         className={`peer appearance-none`}
@@ -25,16 +25,16 @@ const Checkbox = ({ id, children, type, className, ...rest }: TCheckbox) => {
         viewBox="0 0 12 9"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`absolute left-1 top-[30%] text-gray-500 peer-checked:${type == "all" ? "text-white" : "text-accent-blue"}`}
+        className={`absolute left-1 top-[30%] text-gray-500 peer-checked:${type ==="all" ? "text-white" : "text-blue-700"}`}
       >
         <path
           d="M0.5 4L4.5 8L11.5 0.5"
           stroke="currentColor"
-          stroke-width="1.3"
+          strokeWidth="1.8"
         />
       </svg>
       <span
-        className={`point-cursor before:content[' '] flex items-center text-b-2-regular before:mr-2 before:inline-block before:h-5 before:w-5 peer-checked:text-b-2-semibold peer-checked:after:sr-only peer-checked:after:content-['선택됨'] ${typeStyle[`${type}`]}`}
+        className={`point-cursor select-none before:content[' '] flex items-center text-b-2-regular before:mr-2 before:inline-block before:h-5 before:w-5 peer-checked:text-b-2-semibold peer-checked:after:sr-only peer-checked:after:content-['선택됨'] ${typeStyle[`${type}`]}`}
       >
         {children}
       </span>
