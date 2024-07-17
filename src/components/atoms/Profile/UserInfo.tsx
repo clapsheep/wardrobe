@@ -1,5 +1,5 @@
 import { TUser } from "@/types/DatabaseTypes";
-import LabelText from "@/components/atoms/LabelText";
+import BasicButton from "@/components/atoms/BasicButton";
 
 interface UserInfoProps {
   user: TUser;
@@ -15,7 +15,9 @@ function UserInfo({ user, sizeType }: UserInfoProps) {
 
   return (
     <div className={`flex items-center ${style.margin}`}>
-      <LabelText type="info" customStyle="me-3" />
+      <BasicButton size="md" color="primary" className="me-3 h-7 w-12">
+        정보
+      </BasicButton>
       <ul className={`flex text-gray-450 ${style.textSize}`}>
         <li>{user.userInfo.height}cm</li>
         <li className="mx-2" aria-hidden="true">
