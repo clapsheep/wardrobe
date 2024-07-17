@@ -19,6 +19,7 @@ export default function UserImg({ sizeType }: UserImgProps) {
         fill={true}
         src="/svg/defaultProfile.svg"
         alt=""
+        priority
       />
       <figcaption className="sr-only">유저 프로필 이미지</figcaption>
     </figure>
