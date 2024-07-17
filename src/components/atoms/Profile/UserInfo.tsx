@@ -1,4 +1,5 @@
 import { TUser } from "@/types/DatabaseTypes";
+import BasicButton from "@/components/atoms/BasicButton";
 
 interface UserInfoProps {
   user: TUser;
@@ -13,27 +14,27 @@ function UserInfo({ user, sizeType }: UserInfoProps) {
   };
 
   return (
-    <ul className={`flex text-gray-450 ${style.textSize} ${style.margin}`}>
-      <li
-        className={`me-3 bg-gray-700 px-2 text-b-0-semibold text-white ${style.hidden}`}
-      >
+    <div className={`flex items-center ${style.margin}`}>
+      <BasicButton size="md" color="primary" className="me-3 h-7 w-12">
         정보
-      </li>
-      <li>{user.userInfo.height}cm</li>
-      <li className="mx-2" aria-hidden="true">
-        ・
-      </li>
-      <li>{user.userInfo.weight}kg</li>
-      <li
-        className="mx-2 h-4 w-[1px] self-center bg-gray-300"
-        aria-hidden="true"
-      ></li>
-      <li>상의 {user.userInfo.top}</li>
-      <li className="mx-2" aria-hidden="true">
-        ・
-      </li>
-      <li>하의 {user.userInfo.bottom}</li>
-    </ul>
+      </BasicButton>
+      <ul className={`flex text-gray-450 ${style.textSize}`}>
+        <li>{user.userInfo.height}cm</li>
+        <li className="mx-2" aria-hidden="true">
+          ・
+        </li>
+        <li>{user.userInfo.weight}kg</li>
+        <li
+          className="mx-2 h-4 w-[1px] self-center bg-gray-300"
+          aria-hidden="true"
+        ></li>
+        <li>상의 {user.userInfo.top}</li>
+        <li className="mx-2" aria-hidden="true">
+          ・
+        </li>
+        <li>하의 {user.userInfo.bottom}</li>
+      </ul>
+    </div>
   );
 }
 
