@@ -1,83 +1,55 @@
+"use client";
 import {
   Checkbox,
   Progressbar,
   BasicInput,
   BasicButton,
 } from "@/components/atoms";
-import TermsCheckbox from "@/components/molecules/TermsCheckbox";
+import { useState } from "react";
 
-const Join = () => {
-  return (
-    <main className={`mx-auto flex w-96 flex-col items-center justify-center`}>
-      <div className="flex w-full flex-col items-center gap-9">
-        <h2 className="text-h-1-bold">간편가입</h2>
-        <Progressbar max={4} step={1} />
-      </div>
-      <form className="w-full pt-8">
-        <ThirdStep />
-      </form>
-    </main>
-  );
-};
-export default Join;
-
-const List = [
-  { id: "age", desc: "[필수] 만 14세 이상입니다", essential: true },
-  { id: "terms", desc: "[필수] 이용약관 동의", essential: true },
-  { id: "privacy", desc: "[필수] 개인정보 수집 및 이용 동의", essential: true },
-  {
-    id: "marketing",
-    desc: "[선택] 마케팅 목적의 개인정보 수집 및 이용 동의",
-    essential: false,
-  },
-  { id: "advertise", desc: "[선택] 광고성 정보 수신 동의", essential: false },
-];
 const FirstStep = () => {
+  const List = [
+    { id: "age", desc: "[필수] 만 14세 이상입니다", essential: true },
+    { id: "terms", desc: "[필수] 이용약관 동의", essential: true },
+    {
+      id: "privacy",
+      desc: "[필수] 개인정보 수집 및 이용 동의",
+      essential: true,
+    },
+    {
+      id: "marketing",
+      desc: "[선택] 마케팅 목적의 개인정보 수집 및 이용 동의",
+      essential: false,
+    },
+    { id: "advertise", desc: "[선택] 광고성 정보 수신 동의", essential: false },
+  ];
+
   return (
-    <div className="flex flex-col justify-center gap-8 pb-96">
-      <p className={`text-h-5-semibold`}>
-        wardrobe 서비스 이용약관에 <br />
-        동의해주세요.
-      </p>
-      <div className="flex flex-col gap-4 pb-10">
-        <Checkbox id="all" type="all">
-          모두 동의(선택 정보 포함)
+    <div className="flex flex-col justify-center gap-4 pb-10">
+      <Checkbox id="all" type="all">
+        모두 동의(선택 정보 포함)
+      </Checkbox>
+      <hr />
+      {List.map(({ id, desc }) => (
+        <Checkbox key={id} id={id} type="seperate">
+          {desc}
         </Checkbox>
-        <hr />
-        {List.map(({ id, desc, essential }) => (
-          <Checkbox key={id} id={id} type="seperate">
-            {desc}
-          </Checkbox>
-        ))}
-      </div>
-      <BasicButton size="md" color="primary">
-        동의하고 가입하기
-      </BasicButton>
+      ))}
     </div>
   );
 };
 
 const SecondStep = () => {
   return (
-    <div className={`flex flex-col justify-center gap-8 pb-96`}>
-      <p className={`text-h-5-semibold`}>
-        로그인에 사용할
-        <br /> 아이디를 입력해주세요.
-      </p>
+    <div className={`flex flex-col justify-center gap-8`}>
       <BasicInput id={"id"} type="text" placeholder={"아이디(이메일) 입력"} />
-      <BasicButton type={"submit"} size={"md"} color={"primary"}>
-        다음
-      </BasicButton>
     </div>
   );
 };
+
 const ThirdStep = () => {
   return (
-    <div>
-      <p className={`text-h-5-semibold`}>
-        로그인에 사용할 <br />
-        비밀번호를 입력해주세요.
-      </p>
+    <div className="flex flex-col gap-2">
       <BasicInput id="password" type="password" placeholder="비밀번호 입력" />
       <ul className="flex gap-4">
         <li className="flex items-center gap-1">
@@ -154,6 +126,92 @@ const ThirdStep = () => {
         type="password"
         placeholder="비밀번호 확인"
       />
+      <div className="flex items-center gap-1">
+        비밀번호 일치
+        <svg
+          width="12"
+          height="9"
+          viewBox="0 0 12 9"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={`text-gray-500`}
+        >
+          <path
+            d="M0.5 4L4.5 8L11.5 0.5"
+            stroke="currentColor"
+            strokeWidth="1.8"
+          />
+        </svg>
+      </div>
     </div>
   );
 };
+
+type Step = {
+  title: JSX.Element;
+  buttonDesc: string;
+  component: JSX.Element;
+};
+
+const Join = () => {
+  const steps: Record<number, Step> = {
+    1: {
+      title: (
+        <>
+          wardrobe 서비스 이용약관에 <br />
+          동의해주세요.
+        </>
+      ),
+      buttonDesc: "동의하고 가입하기",
+      component: <FirstStep />,
+    },
+    2: {
+      title: (
+        <>
+          로그인에 사용할 <br />
+          아이디를 입력해주세요.
+        </>
+      ),
+      buttonDesc: "다음",
+      component: <SecondStep />,
+    },
+    3: {
+      title: (
+        <>
+          로그인에 사용할 <br />
+          비밀번호를 입력해주세요.
+        </>
+      ),
+      buttonDesc: "완료",
+      component: <ThirdStep />,
+    },
+  };
+
+  const [joinStep, setJoinStep] = useState<number>(1);
+
+  const currentStep = steps[joinStep];
+  console.log(joinStep);
+  return (
+    <main
+      className={`mx-auto flex w-96 flex-col items-center justify-center gap-9 pb-96`}
+    >
+      <div className="flex w-full flex-col items-center gap-9">
+        <h2 className="text-h-1-bold">간편가입</h2>
+        <Progressbar max={3} step={joinStep} />
+        <div className="w-full">
+          <p className={`text-h-5-semibold`}>{currentStep.title}</p>
+        </div>
+      </div>
+      <form className="w-full">{currentStep.component}</form>
+      <BasicButton
+        onClick={() => setJoinStep((prevStep) => Math.min(prevStep + 1, 3))}
+        size="md"
+        color="primary"
+      >
+        {currentStep.buttonDesc}
+      </BasicButton>
+    </main>
+  );
+};
+
+export default Join;
