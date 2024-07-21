@@ -1,7 +1,8 @@
-import dbConnect from "@/lib/dbConnect";
-import { User } from "@/models/schema";
+import { dbConnect } from "@/lib/utils/dbConnect";
+import { User } from "@/lib/models/schema";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { saltAndHashPassword } from "@/lib/utils";
 
 export const GET = async () => {
   try {
@@ -18,15 +19,13 @@ export const POST = async (req: Request) => {
     await dbConnect();
     const { username, password, userInfo } = await req.json();
 
-    let user = await User.findOne({username});
-    if (user){
-      return Response.json({error:'이미 사용중인 아이디입니다.'})
+    let user = await User.findOne({ username });
+    if (user) {
+      return Response.json({ error: "이미 사용중인 아이디입니다." });
     }
 
     user = new User({ username, password, userInfo });
-
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
+    user.password = await saltAndHashPassword(password);
     await user.save();
 
     const payload = { user: { id: user._id } };
@@ -35,7 +34,7 @@ export const POST = async (req: Request) => {
       if (err) throw err;
       createdToken = token;
     });
-    
+
     return Response.json({ createdToken });
   } catch (error: any) {
     return Response.json({ error: error.message });

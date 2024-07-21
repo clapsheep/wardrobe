@@ -1,5 +1,5 @@
-import dbConnect from "@/lib/dbConnect";
-import { Style } from "@/models/schema";
+import { dbConnect } from "@/lib/utils/dbConnect";
+import { Style } from "@/lib/models/schema";
 
 // 스타일 랜덤하게 GET
 export const GET = async () => {
