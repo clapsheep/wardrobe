@@ -12,7 +12,6 @@ const Checkbox = ({
   children,
   type,
   className,
-
   ...rest
 }: TCheckbox) => {
   const typeStyle = {
@@ -30,8 +29,10 @@ const Checkbox = ({
         className={`peer appearance-none`}
         type="checkbox"
         aria-describedby={`${children} 체크`}
-        {...rest}
-        onChange={undefined}
+        onChange={() => {
+          null;
+        }}
+        checked={checked}
       />
       <svg
         width="12"

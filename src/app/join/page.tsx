@@ -8,6 +8,32 @@ import {
 import { useState } from "react";
 
 const FirstStep = () => {
+  const [isChecked, setIsChecked] = useState(new Map());
+
+  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, checked } = e.target;
+
+    if (id === "all") {
+      setIsChecked(() => {
+        const newMap = new Map();
+        newMap.set(id, checked);
+        List.forEach((item) => newMap.set(item.id, checked));
+        return newMap;
+      });
+    } else {
+      setIsChecked((prevState) => new Map(prevState).set(id, checked));
+      if (!checked) {
+        setIsChecked((prev) => new Map(prev).set("all", false));
+      }
+      if (
+        List.filter((item) => isChecked.get(item.id) === true).length ===
+        List.length
+      ) {
+        setIsChecked((prev) => new Map(prev).set("all", true));
+      }
+    }
+  };
+
   const List = [
     { id: "age", desc: "[필수] 만 14세 이상입니다", essential: true },
     { id: "terms", desc: "[필수] 이용약관 동의", essential: true },
@@ -21,17 +47,24 @@ const FirstStep = () => {
       desc: "[선택] 마케팅 목적의 개인정보 수집 및 이용 동의",
       essential: false,
     },
-    { id: "advertise", desc: "[선택] 광고성 정보 수신 동의", essential: false },
+    {
+      id: "advertise",
+      desc: "[선택] 광고성 정보 수신 동의",
+      essential: false,
+    },
   ];
 
   return (
-    <div className="flex flex-col justify-center gap-4 pb-10">
-      <Checkbox id="all" type="all">
+    <div
+      onChange={handleCheck}
+      className="flex flex-col justify-center gap-4 pb-10"
+    >
+      <Checkbox id="all" type="all" checked={isChecked.get("all")}>
         모두 동의(선택 정보 포함)
       </Checkbox>
       <hr />
       {List.map(({ id, desc }) => (
-        <Checkbox key={id} id={id} type="seperate">
+        <Checkbox key={id} id={id} type="seperate" checked={isChecked.get(id)}>
           {desc}
         </Checkbox>
       ))}
@@ -186,18 +219,16 @@ const Join = () => {
       component: <ThirdStep />,
     },
   };
-
   const [joinStep, setJoinStep] = useState<number>(1);
-
   const currentStep = steps[joinStep];
-  console.log(joinStep);
+
   return (
     <main
       className={`mx-auto flex w-96 flex-col items-center justify-center gap-9 pb-96`}
     >
       <div className="flex w-full flex-col items-center gap-9">
         <h2 className="text-h-1-bold">간편가입</h2>
-        <Progressbar max={3} step={joinStep} />
+        <Progressbar max={Object.keys(steps).length} step={joinStep} />
         <div className="w-full">
           <p className={`text-h-5-semibold`}>{currentStep.title}</p>
         </div>
