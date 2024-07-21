@@ -3,9 +3,18 @@ interface TCheckbox {
   children: string;
   type: "all" | "seperate";
   className?: string;
+  checked: boolean;
 }
 
-const Checkbox = ({ id, children, type, className, ...rest }: TCheckbox) => {
+const Checkbox = ({
+  id,
+  checked,
+  children,
+  type,
+  className,
+
+  ...rest
+}: TCheckbox) => {
   const typeStyle = {
     all: "before:rounded-sm before:border before:border-gray-500 peer-checked:before:bg-accent-blue ",
     seperate: "peer-checked:before:text-b-2-semibold",
@@ -22,6 +31,7 @@ const Checkbox = ({ id, children, type, className, ...rest }: TCheckbox) => {
         type="checkbox"
         aria-describedby={`${children} 체크`}
         {...rest}
+        onChange={undefined}
       />
       <svg
         width="12"
