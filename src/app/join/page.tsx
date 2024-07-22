@@ -8,32 +8,7 @@ import {
 import { useState } from "react";
 
 const FirstStep = () => {
-  const [isChecked, setIsChecked] = useState(new Map());
-
-  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, checked } = e.target;
-
-    if (id === "all") {
-      setIsChecked(() => {
-        const newMap = new Map();
-        newMap.set(id, checked);
-        List.forEach((item) => newMap.set(item.id, checked));
-        return newMap;
-      });
-    } else {
-      setIsChecked((prevState) => new Map(prevState).set(id, checked));
-      if (!checked) {
-        setIsChecked((prev) => new Map(prev).set("all", false));
-      }
-      if (
-        List.filter((item) => isChecked.get(item.id) === true).length ===
-        List.length
-      ) {
-        setIsChecked((prev) => new Map(prev).set("all", true));
-      }
-    }
-  };
-
+  type CheckState = Record<string, boolean> & { all: boolean };
   const List = [
     { id: "age", desc: "[필수] 만 14세 이상입니다", essential: true },
     { id: "terms", desc: "[필수] 이용약관 동의", essential: true },
@@ -54,17 +29,44 @@ const FirstStep = () => {
     },
   ];
 
+  const [isChecked, setIsChecked] = useState<CheckState>(() => {
+    const initial: CheckState = { all: false };
+    List.forEach(({ id }) => {
+      initial[id] = false;
+    });
+    return initial;
+  });
+
+  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, checked } = e.target;
+    setIsChecked((prevState) => {
+      const newState = { ...prevState };
+
+      if (id === "all") {
+        List.forEach((item) => {
+          newState[item.id] = checked;
+        });
+        newState.all = checked;
+      } else {
+        newState[id] = checked;
+        const allChecked = List.every((item) => newState[item.id]);
+        newState.all = allChecked;
+      }
+      return newState;
+    });
+  };
+
   return (
     <div
       onChange={handleCheck}
       className="flex flex-col justify-center gap-4 pb-10"
     >
-      <Checkbox id="all" type="all" checked={isChecked.get("all")}>
+      <Checkbox id="all" type="all" checked={isChecked.all}>
         모두 동의(선택 정보 포함)
       </Checkbox>
       <hr />
       {List.map(({ id, desc }) => (
-        <Checkbox key={id} id={id} type="seperate" checked={isChecked.get(id)}>
+        <Checkbox key={id} id={id} type="seperate" checked={isChecked[id]}>
           {desc}
         </Checkbox>
       ))}
