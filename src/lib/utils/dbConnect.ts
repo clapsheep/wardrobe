@@ -1,11 +1,12 @@
 import mongoose, { Mongoose } from "mongoose";
+import { MongoClient } from "mongodb";
 
-// 타입 정의 추가
 declare global {
   var mongoose: {
     promise: Promise<Mongoose> | null;
     conn: Mongoose | null;
   };
+  var mongoClientPromise: Promise<MongoClient> | null;
 }
 
 const { MONGO_URI } = process.env;
@@ -14,6 +15,7 @@ if (!MONGO_URI) {
   throw new Error(".env.local에 있는 MONGO_URI를 확인해주세요.");
 }
 
+// Mongoose 연결
 async function dbConnect() {
   let conn = await mongoose
     .set({ debug: true, strictQuery: false })
@@ -23,11 +25,22 @@ async function dbConnect() {
       console.error("Mongoose 연결 오류:", error);
       throw error;
     });
-  console.log("연결성공");
+  console.log("Mongoose 연결 성공");
   return conn;
 }
 
-export default dbConnect;
+let clientPromise: Promise<MongoClient>;
+
+if (process.env.NODE_ENV === "development") {
+  if (!global.mongoClientPromise) {
+    global.mongoClientPromise = new MongoClient(MONGO_URI).connect();
+  }
+  clientPromise = global.mongoClientPromise;
+} else {
+  clientPromise = new MongoClient(MONGO_URI).connect();
+}
+
+export { dbConnect, clientPromise };
 
 // 몽구스가 자꾸 캐싱해서 불편해서 끔
 // import mongoose, { Mongoose } from "mongoose";

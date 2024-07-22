@@ -2,7 +2,7 @@ import React from "react";
 import UserProfile from "@/components/molecules/Profile/UserProfile";
 import { TUser } from "@/types/DatabaseTypes";
 import { notFound } from "next/navigation";
-import { getOneUser } from "@/utils/api";
+import { getOneUser } from "@/lib/api";
 
 interface UserProfileProps {
   clothesCount: number;

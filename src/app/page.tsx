@@ -1,4 +1,4 @@
-import ResponsiveComponent from "@/components/atoms/ResponsiveComponent";
+import { ResponsiveComponent } from "@/components/atoms";
 import {
   MainCarouselDesktop,
   MainCarouselMobile,
@@ -59,7 +59,7 @@ const MainDeskop = ({
 }: Tdata) => {
   return (
     <main className="mt-16">
-      <h1 className="sr-only">프로모션</h1>
+      <h2 className="sr-only">프로모션</h2>
 
       <div className="relative">
         <p className="mx-[85px] text-[70px] font-extralight leading-[135%] tracking-[-0.05em] [word-spacing:15px]">
@@ -74,7 +74,7 @@ const MainDeskop = ({
       </div>
 
       <section className="mx-[85px] mt-[164px] flex flex-col">
-        <h1 className="sr-only">코디 추천</h1>
+        <h2 className="sr-only">코디 추천</h2>
         <p className="text-h-4-semibold">
           <span className="text-accent-blue">{user.username}</span>님의
           Dressroom
@@ -96,7 +96,7 @@ const MainMobile = ({
 }: Tdata) => {
   return (
     <main className="mt-4">
-      <h1 className="sr-only">프로모션</h1>
+      <h2 className="sr-only">프로모션</h2>
       <div className="relative">
         <p className="absolute bottom-0 z-10 px-4 text-[40px] font-extralight leading-[135%] tracking-[-0.05em] text-white drop-shadow-[0_1.6px_1.6px_rgba(0,0,0,0.5)] [word-spacing:10px]">
           TRY{" "}
@@ -110,7 +110,7 @@ const MainMobile = ({
       </div>
 
       <section className="mx-5 mt-[53px] flex flex-col">
-        <h1 className="sr-only">코디 추천</h1>
+        <h2 className="sr-only">코디 추천</h2>
         <p className="text-h-5-semibold">
           <span className="text-accent-blue">{user.username}</span>님의
           Dressroom

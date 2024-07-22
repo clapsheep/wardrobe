@@ -1,14 +1,18 @@
 import { BasicButton, BasicInput } from "@/components/atoms";
+import { auth, signIn } from "@/auth";
 
-const LoginPage = () => {
+const LoginPage = async () => {
   const loginAction = async (formData: FormData) => {
     "use server";
-    const loginFormData = {
-      username: formData.get("username"),
-      password: formData.get("password"),
-    };
-    console.log(loginFormData.username, loginFormData.password);
+    // const loginFormData = {
+    //   username: formData.get("username"),
+    //   password: formData.get("password"),
+    // };
+    await signIn("credentials", formData);
+    // console.log(loginFormData.username, loginFormData.password);
   };
+  const session = await auth();
+  console.log("********뭐나오냐********", session);
 
   return (
     <main className="mx-auto my-0 flex max-w-[480px] flex-col items-center justify-center px-5 py-[50px]">

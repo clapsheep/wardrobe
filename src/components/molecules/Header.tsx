@@ -4,6 +4,7 @@ import { Svg } from "@/components/atoms";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { MobileHamburger, SearchModal } from "@/components/molecules";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Header() {
   const pathname = usePathname();
@@ -35,7 +36,7 @@ export default function Header() {
     <>
       {/* 모바일 헤더 */}
       <header
-        className={`mobile:items-center sticky top-0 z-10 hidden h-12 w-full bg-white px-2 mobile:inline-block mobile:flex mobile:justify-between`}
+        className={`sticky top-0 z-10 hidden h-12 w-full bg-white px-2 mobile:flex mobile:items-center mobile:justify-between`}
       >
         <Link href="/">
           <Svg id="logo-mobile_Black" />
@@ -97,7 +98,13 @@ export default function Header() {
               </li>
               {isLogin ? (
                 <li>
-                  <button className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      signOut();
+                    }}
+                    className="flex items-center gap-1"
+                  >
                     <Svg id="log-out" size={scroll ? 28 : 18} />
                     <span className={`${scroll ? "sr-only" : ""}`}>Logout</span>
                   </button>
