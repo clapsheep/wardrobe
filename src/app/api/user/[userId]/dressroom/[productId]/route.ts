@@ -1,5 +1,5 @@
-import dbConnect from "@/lib/dbConnect";
-import { User } from "@/models/schema";
+import { dbConnect } from "@/lib/utils/dbConnect";
+import { User } from "@/lib/models/schema";
 import { isValidObjectId } from "mongoose";
 
 export const DELETE = async (

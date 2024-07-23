@@ -4,11 +4,12 @@ import { Svg } from "@/components/atoms";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { MobileHamburger, SearchModal } from "@/components/molecules";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Header() {
   const pathname = usePathname();
   const [scroll, setScroll] = useState(0);
-  const [screen, setScreen] = useState<string | null>(null);
+
   //mobile burger
   const [activeBurger, setActiveBurger] = useState<boolean>(false);
   //search
@@ -17,20 +18,14 @@ export default function Header() {
     const handleScroll = () => {
       setScroll(window.scrollY);
     };
-    const handleResize = () => {
-      setScreen(window.outerWidth > 540 ? "desktop" : "mobile");
-    };
-    // 컴포넌트가 마운트될 때 초기 화면 크기 설정
-    handleResize();
-    window.addEventListener("resize", handleResize);
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  const isLogin = true;
+  const isLogin = false;
 
   const navItems = [
     { href: "/dressroom", text: "Dressroom" },
@@ -40,7 +35,9 @@ export default function Header() {
   return (
     <>
       {/* 모바일 헤더 */}
-      <header className="hidden w-full px-2 mobile:inline-block mobile:flex mobile:justify-between">
+      <header
+        className={`sticky top-0 z-10 hidden h-12 w-full bg-white px-2 mobile:flex mobile:items-center mobile:justify-between`}
+      >
         <Link href="/">
           <Svg id="logo-mobile_Black" />
         </Link>
@@ -58,8 +55,10 @@ export default function Header() {
         ""
       )}
       {/* 데스크톱 헤더 */}
-      <header className="my-5 w-full font-sans text-gray-800">
-        <nav className="flex w-screen items-center justify-between px-20 mobile:px-1">
+      <header
+        className={`sticky top-0 z-10 my-5 w-full bg-white font-sans text-gray-800 mobile:hidden ${scroll ? "h-28" : "h-36"}`}
+      >
+        <nav className="relative flex h-full w-screen items-center justify-between px-20 mobile:px-1">
           <ul className="flex justify-between gap-10 text-h-2-bold mobile:hidden">
             {navItems.map((item) => (
               <li
@@ -70,7 +69,10 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <Link className="max-w-full mobile:hidden" href="/">
+          <Link
+            className="absolute left-[45%] max-w-full mobile:hidden"
+            href="/"
+          >
             <Svg id="logo-web_Black" />
           </Link>
           <div
@@ -86,14 +88,23 @@ export default function Header() {
                 </Link>
               </li>
               <li>
-                <Link className="flex items-center gap-1" href="/profile/bookmark">
+                <Link
+                  className="flex items-center gap-1"
+                  href="/profile/bookmark"
+                >
                   <Svg id="bookmark_false" size={scroll ? 28 : 18} />
                   <span className={`${scroll ? "sr-only" : ""}`}>Bookmark</span>
                 </Link>
               </li>
               {isLogin ? (
                 <li>
-                  <button className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      signOut();
+                    }}
+                    className="flex items-center gap-1"
+                  >
                     <Svg id="log-out" size={scroll ? 28 : 18} />
                     <span className={`${scroll ? "sr-only" : ""}`}>Logout</span>
                   </button>
@@ -112,7 +123,7 @@ export default function Header() {
             </button>
           </div>
         </nav>
-      </header>{" "}
+      </header>
       {isSearchState ? (
         <SearchModal
           closeFn={() => setIsSearchState(false)}

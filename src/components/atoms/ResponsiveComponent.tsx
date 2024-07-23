@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useMediaQuery } from "@/utils/hooks";
+import { useMediaQuery } from "@/lib/hooks";
 import dynamic from "next/dynamic";
 
 interface Tresponse {

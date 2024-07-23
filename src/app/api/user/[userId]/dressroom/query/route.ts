@@ -1,5 +1,5 @@
-import dbConnect from "@/lib/dbConnect";
-import { User } from "@/models/schema";
+import { dbConnect } from "@/lib/utils/dbConnect";
+import { User } from "@/lib/models/schema";
 import { isValidObjectId } from "mongoose";
 import { type NextRequest } from "next/server";
 //http://localhost:3000/api/user/667c2764df7a458908b4b54b/dressroom/query?season=summer&color=black&category=top
