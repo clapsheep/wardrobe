@@ -5,12 +5,17 @@ import {
   BasicInput,
   BasicButton,
 } from "@/components/atoms";
-import { useState } from "react";
+import { useState, createContext, useContext } from "react";
 
-const FirstStep = () => {
+interface TStepComponent {
+  setJoinStep: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const FirstStep = ({ setJoinStep }: TStepComponent) => {
   type CheckState = Record<string, boolean> & { all: boolean };
   const List = [
     { id: "age", desc: "[필수] 만 14세 이상입니다", essential: true },
+
     { id: "terms", desc: "[필수] 이용약관 동의", essential: true },
     {
       id: "privacy",
@@ -41,10 +46,9 @@ const FirstStep = () => {
     const { id, checked } = e.target;
     setIsChecked((prevState) => {
       const newState = { ...prevState };
-
       if (id === "all") {
-        List.forEach((item) => {
-          newState[item.id] = checked;
+        List.forEach(({ id }) => {
+          newState[id] = checked;
         });
         newState.all = checked;
       } else {
@@ -70,19 +74,33 @@ const FirstStep = () => {
           {desc}
         </Checkbox>
       ))}
+      <BasicButton
+        onClick={() => setJoinStep((prev) => prev + 1)}
+        size="md"
+        color="primary"
+      >
+        동의하고 가입하기
+      </BasicButton>
     </div>
   );
 };
 
-const SecondStep = () => {
+const SecondStep = ({ setJoinStep }: TStepComponent) => {
   return (
     <div className={`flex flex-col justify-center gap-8`}>
       <BasicInput id={"id"} type="text" placeholder={"아이디(이메일) 입력"} />
+      <BasicButton
+        onClick={() => setJoinStep((prev) => prev + 1)}
+        size="md"
+        color="primary"
+      >
+        다음
+      </BasicButton>
     </div>
   );
 };
 
-const ThirdStep = () => {
+const ThirdStep = ({ setJoinStep }: TStepComponent) => {
   return (
     <div className="flex flex-col gap-2">
       <BasicInput id="password" type="password" placeholder="비밀번호 입력" />
@@ -178,18 +196,26 @@ const ThirdStep = () => {
           />
         </svg>
       </div>
+      <BasicButton
+        onClick={() => console.log("완룡")}
+        size="md"
+        color="primary"
+      >
+        완료
+      </BasicButton>
     </div>
   );
 };
-
-type Step = {
+// Define the Step interface
+interface Step {
   title: JSX.Element;
-  buttonDesc: string;
   component: JSX.Element;
-};
+}
 
-const Join = () => {
-  const steps: Record<number, Step> = {
+const Join: React.FC = () => {
+  const [joinData, setJoinData] = useState({});
+  const [joinStep, setJoinStep] = useState(1);
+  const steps: { [key: number]: Step } = {
     1: {
       title: (
         <>
@@ -197,8 +223,7 @@ const Join = () => {
           동의해주세요.
         </>
       ),
-      buttonDesc: "동의하고 가입하기",
-      component: <FirstStep />,
+      component: <FirstStep setJoinStep={setJoinStep} />,
     },
     2: {
       title: (
@@ -207,8 +232,7 @@ const Join = () => {
           아이디를 입력해주세요.
         </>
       ),
-      buttonDesc: "다음",
-      component: <SecondStep />,
+      component: <SecondStep setJoinStep={setJoinStep} />,
     },
     3: {
       title: (
@@ -217,32 +241,23 @@ const Join = () => {
           비밀번호를 입력해주세요.
         </>
       ),
-      buttonDesc: "완료",
-      component: <ThirdStep />,
+      component: <ThirdStep setJoinStep={setJoinStep} />,
     },
   };
-  const [joinStep, setJoinStep] = useState<number>(1);
   const currentStep = steps[joinStep];
 
   return (
-    <main
-      className={`mx-auto flex w-96 flex-col items-center justify-center gap-9 pb-96`}
-    >
+    <main className="mx-auto flex w-96 flex-col items-center justify-center gap-9 pb-96">
       <div className="flex w-full flex-col items-center gap-9">
         <h2 className="text-h-1-bold">간편가입</h2>
         <Progressbar max={Object.keys(steps).length} step={joinStep} />
         <div className="w-full">
-          <p className={`text-h-5-semibold`}>{currentStep.title}</p>
+          <p className="text-h-5-semibold">{currentStep.title}</p>
         </div>
       </div>
-      <form className="w-full">{currentStep.component}</form>
-      <BasicButton
-        onClick={() => setJoinStep((prevStep) => Math.min(prevStep + 1, 3))}
-        size="md"
-        color="primary"
-      >
-        {currentStep.buttonDesc}
-      </BasicButton>
+      <form onChange={(e) => setJoinData(e.target)} className="w-full">
+        {currentStep.component}
+      </form>
     </main>
   );
 };
