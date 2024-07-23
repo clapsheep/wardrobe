@@ -5,35 +5,38 @@ import {
   BasicInput,
   BasicButton,
 } from "@/components/atoms";
-import { useState, createContext, useContext } from "react";
-
+import { useState, createContext, useContext, useEffect } from "react";
+//타입 지정
 interface TStepComponent {
   setJoinStep: React.Dispatch<React.SetStateAction<number>>;
 }
+interface Step {
+  title: JSX.Element;
+  component: JSX.Element;
+}
 
+type CheckState = Record<string, boolean> & { all: boolean };
+
+//회원가입 첫번째 단계
 const FirstStep = ({ setJoinStep }: TStepComponent) => {
-  type CheckState = Record<string, boolean> & { all: boolean };
   const List = [
-    { id: "age", desc: "[필수] 만 14세 이상입니다", essential: true },
+    { id: "age", desc: "[필수] 만 14세 이상입니다" },
 
-    { id: "terms", desc: "[필수] 이용약관 동의", essential: true },
+    { id: "terms", desc: "[필수] 이용약관 동의" },
     {
       id: "privacy",
       desc: "[필수] 개인정보 수집 및 이용 동의",
-      essential: true,
     },
     {
       id: "marketing",
       desc: "[선택] 마케팅 목적의 개인정보 수집 및 이용 동의",
-      essential: false,
     },
     {
       id: "advertise",
       desc: "[선택] 광고성 정보 수신 동의",
-      essential: false,
     },
   ];
-
+  //각 약관의 체크 여부
   const [isChecked, setIsChecked] = useState<CheckState>(() => {
     const initial: CheckState = { all: false };
     List.forEach(({ id }) => {
@@ -42,6 +45,7 @@ const FirstStep = ({ setJoinStep }: TStepComponent) => {
     return initial;
   });
 
+  // 약관 체크박스 클릭 이벤트 핸들러
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, checked } = e.target;
     setIsChecked((prevState) => {
@@ -76,6 +80,9 @@ const FirstStep = ({ setJoinStep }: TStepComponent) => {
       ))}
       <BasicButton
         onClick={() => setJoinStep((prev) => prev + 1)}
+        disabled={
+          !(isChecked["age"] && isChecked["terms"] && isChecked["privacy"])
+        }
         size="md"
         color="primary"
       >
@@ -85,6 +92,7 @@ const FirstStep = ({ setJoinStep }: TStepComponent) => {
   );
 };
 
+//회원가입 두번째 단계
 const SecondStep = ({ setJoinStep }: TStepComponent) => {
   return (
     <div className={`flex flex-col justify-center gap-8`}>
@@ -100,6 +108,7 @@ const SecondStep = ({ setJoinStep }: TStepComponent) => {
   );
 };
 
+//회원가입 세번째 단계
 const ThirdStep = ({ setJoinStep }: TStepComponent) => {
   return (
     <div className="flex flex-col gap-2">
@@ -206,11 +215,6 @@ const ThirdStep = ({ setJoinStep }: TStepComponent) => {
     </div>
   );
 };
-// Define the Step interface
-interface Step {
-  title: JSX.Element;
-  component: JSX.Element;
-}
 
 const Join: React.FC = () => {
   const [joinData, setJoinData] = useState({});
