@@ -5,10 +5,19 @@ import {
   BasicInput,
   BasicButton,
 } from "@/components/atoms";
-import { useState, createContext, useContext, useEffect } from "react";
+import {
+  useState,
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
+import { useDebounce } from "@/hooks";
+
 //타입 지정
 interface TStepComponent {
   setJoinStep: React.Dispatch<React.SetStateAction<number>>;
+  setJoinData: any;
 }
 interface Step {
   title: JSX.Element;
@@ -19,6 +28,7 @@ type CheckState = Record<string, boolean> & { all: boolean };
 
 //회원가입 첫번째 단계
 const FirstStep = ({ setJoinStep }: TStepComponent) => {
+  const setJoinData = useContext(JoinData);
   const List = [
     { id: "age", desc: "[필수] 만 14세 이상입니다" },
 
@@ -65,21 +75,26 @@ const FirstStep = ({ setJoinStep }: TStepComponent) => {
   };
 
   return (
-    <div
-      onChange={handleCheck}
-      className="flex flex-col justify-center gap-4 pb-10"
-    >
-      <Checkbox id="all" type="all" checked={isChecked.all}>
-        모두 동의(선택 정보 포함)
-      </Checkbox>
-      <hr />
-      {List.map(({ id, desc }) => (
-        <Checkbox key={id} id={id} type="seperate" checked={isChecked[id]}>
-          {desc}
+    <>
+      <div
+        onChange={handleCheck}
+        className="flex flex-col justify-center gap-4 pb-10"
+      >
+        <Checkbox id="all" type="all" checked={isChecked.all}>
+          모두 동의(선택 정보 포함)
         </Checkbox>
-      ))}
+        <hr />
+        {List.map(({ id, desc }) => (
+          <Checkbox key={id} id={id} type="seperate" checked={isChecked[id]}>
+            {desc}
+          </Checkbox>
+        ))}
+      </div>
       <BasicButton
-        onClick={() => setJoinStep((prev) => prev + 1)}
+        onClick={() => {
+          setJoinStep((prev) => prev + 1);
+          setJoinData({ terms: isChecked });
+        }}
         disabled={
           !(isChecked["age"] && isChecked["terms"] && isChecked["privacy"])
         }
@@ -88,19 +103,160 @@ const FirstStep = ({ setJoinStep }: TStepComponent) => {
       >
         동의하고 가입하기
       </BasicButton>
-    </div>
+    </>
   );
 };
 
 //회원가입 두번째 단계
-const SecondStep = ({ setJoinStep }: TStepComponent) => {
+/*const SecondStep = ({ setJoinStep }: TStepComponent) => {
+  const setJoinData = useContext(JoinData);
+  const [enteredEmail, setEnteredEmail] = useState("");
+  const [disableButton, setDisableButton] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const debouncedData = useDebounce(enteredEmail, 300);
+  const isProperEmail = (email: string) => {
+    const emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    return emailReg.test(email);
+  };
+  const isRegsiterdEmail = (email: string) => {
+    return true;
+  };
+  useEffect(() => {
+    if (debouncedData) {
+      if (!isProperEmail(debouncedData)) {
+        setErrorMessage("이메일 형식이 올바르지 않습니다.");
+      } else if (!isRegsiterdEmail(debouncedData)) {
+        setErrorMessage("가입된 이메일임");
+      } else {
+        setErrorMessage("");
+        setDisableButton(false);
+      }
+    }
+  }, [debouncedData]);
   return (
-    <div className={`flex flex-col justify-center gap-8`}>
-      <BasicInput id={"id"} type="text" placeholder={"아이디(이메일) 입력"} />
+    <div
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        setEnteredEmail(e.target.value)
+      }
+      className={`flex flex-col justify-center gap-8`}
+    >
+      <div>
+        <BasicInput id={"id"} type="text" placeholder={"아이디(이메일) 입력"} />
+        <span className="text-b-3-regular text-accent-red">{errorMessage}</span>
+      </div>
       <BasicButton
-        onClick={() => setJoinStep((prev) => prev + 1)}
+        onClick={() => {
+          setJoinStep((prev) => prev + 1);
+          setJoinData((prev) => {
+            return { ...prev, email: debouncedData };
+          });
+        }}
         size="md"
         color="primary"
+        disabled={disableButton}
+      >
+        다음
+      </BasicButton>
+    </div>
+  );
+};*/
+
+type State = {
+  enteredEmail: string;
+  isButtonDisabled: boolean;
+  errorMessage: string;
+};
+
+type Action =
+  | { type: "SET_EMAIL"; payload: string }
+  | { type: "SET_ERROR"; payload: string }
+  | { type: "CLEAR_ERROR" }
+  | { type: "ENABLE_BUTTON" }
+  | { type: "DISABLE_BUTTON" };
+
+const initialState: State = {
+  enteredEmail: "",
+  isButtonDisabled: true,
+  errorMessage: "",
+};
+
+function reducer(state: State, action: Action): State {
+  switch (action.type) {
+    case "SET_EMAIL":
+      return { ...state, enteredEmail: action.payload };
+    case "SET_ERROR":
+      return { ...state, errorMessage: action.payload, isButtonDisabled: true };
+    case "CLEAR_ERROR":
+      return { ...state, errorMessage: "", isButtonDisabled: false };
+    case "ENABLE_BUTTON":
+      return { ...state, isButtonDisabled: false };
+    case "DISABLE_BUTTON":
+      return { ...state, isButtonDisabled: true };
+    default:
+      return state;
+  }
+}
+
+//회원가입 두번째 단계
+const SecondStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const debouncedEmail = useDebounce(state.enteredEmail, 300);
+
+  const isProperEmail = (email: string) => {
+    const emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    return emailReg.test(email);
+  };
+
+  const isRegisteredEmail = (email: string) => {
+    return false;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: "SET_EMAIL", payload: e.target.value });
+  };
+
+  useEffect(() => {
+    if (debouncedEmail) {
+      if (!isProperEmail(debouncedEmail)) {
+        dispatch({
+          type: "SET_ERROR",
+          payload: "이메일 형식이 올바르지 않습니다.",
+        });
+      } else if (isRegisteredEmail(debouncedEmail)) {
+        dispatch({ type: "SET_ERROR", payload: "가입된 이메일입니다." });
+      } else {
+        dispatch({ type: "CLEAR_ERROR" });
+      }
+    } else {
+      dispatch({ type: "DISABLE_BUTTON" });
+    }
+  }, [debouncedEmail]);
+
+  return (
+    <div className={`flex flex-col justify-center gap-8`}>
+      <div>
+        <input
+          id="id"
+          type="text"
+          placeholder="아이디(이메일) 입력"
+          value={state.enteredEmail}
+          onChange={handleInputChange}
+          className="w-full rounded border p-2"
+        />
+        {state.errorMessage && (
+          <span className="mt-2 block text-b-3-regular text-accent-red">
+            {state.errorMessage}
+          </span>
+        )}
+      </div>
+      <BasicButton
+        onClick={() => {
+          setJoinStep((prev) => prev + 1);
+          setJoinData((prev) => ({ ...prev, email: debouncedEmail }));
+        }}
+        size="md"
+        color="primary"
+        disabled={state.isButtonDisabled}
       >
         다음
       </BasicButton>
@@ -216,8 +372,11 @@ const ThirdStep = ({ setJoinStep }: TStepComponent) => {
   );
 };
 
+const JoinData = createContext({});
+
 const Join: React.FC = () => {
-  const [joinData, setJoinData] = useState({});
+  const [joinData, setJoinData] = useState();
+  console.log(joinData);
   const [joinStep, setJoinStep] = useState(1);
   const steps: { [key: number]: Step } = {
     1: {
@@ -251,18 +410,18 @@ const Join: React.FC = () => {
   const currentStep = steps[joinStep];
 
   return (
-    <main className="mx-auto flex w-96 flex-col items-center justify-center gap-9 pb-96">
-      <div className="flex w-full flex-col items-center gap-9">
-        <h2 className="text-h-1-bold">간편가입</h2>
-        <Progressbar max={Object.keys(steps).length} step={joinStep} />
-        <div className="w-full">
-          <p className="text-h-5-semibold">{currentStep.title}</p>
+    <JoinData.Provider value={setJoinData}>
+      <main className="mx-auto flex w-96 flex-col items-center justify-center gap-9 pb-96">
+        <div className="flex w-full flex-col items-center gap-9">
+          <h2 className="text-h-1-bold">간편가입</h2>
+          <Progressbar max={Object.keys(steps).length} step={joinStep} />
+          <div className="w-full">
+            <p className="text-h-5-semibold">{currentStep.title}</p>
+          </div>
         </div>
-      </div>
-      <form onChange={(e) => setJoinData(e.target)} className="w-full">
-        {currentStep.component}
-      </form>
-    </main>
+        <form className="w-full">{currentStep.component}</form>
+      </main>
+    </JoinData.Provider>
   );
 };
 
