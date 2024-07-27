@@ -17,7 +17,7 @@ import { useDebounce } from "@/hooks";
 //타입 지정
 interface TStepComponent {
   setJoinStep: React.Dispatch<React.SetStateAction<number>>;
-  setJoinData: any;
+  setJoinData: () => any;
 }
 interface Step {
   title: JSX.Element;
@@ -161,26 +161,29 @@ const FirstStep = ({ setJoinStep }: TStepComponent) => {
   );
 };*/
 
-type State = {
+type SecondStepState = {
   enteredEmail: string;
   isButtonDisabled: boolean;
   errorMessage: string;
 };
 
-type Action =
+type SecondStepAction =
   | { type: "SET_EMAIL"; payload: string }
   | { type: "SET_ERROR"; payload: string }
   | { type: "CLEAR_ERROR" }
   | { type: "ENABLE_BUTTON" }
   | { type: "DISABLE_BUTTON" };
 
-const initialState: State = {
+const initialState: SecondStepState = {
   enteredEmail: "",
   isButtonDisabled: true,
   errorMessage: "",
 };
 
-function reducer(state: State, action: Action): State {
+function emailReducer(
+  state: SecondStepState,
+  action: SecondStepAction,
+): SecondStepState {
   switch (action.type) {
     case "SET_EMAIL":
       return { ...state, enteredEmail: action.payload };
@@ -199,7 +202,7 @@ function reducer(state: State, action: Action): State {
 
 //회원가입 두번째 단계
 const SecondStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(emailReducer, initialState);
   const debouncedEmail = useDebounce(state.enteredEmail, 300);
 
   const isProperEmail = (email: string) => {
@@ -207,6 +210,7 @@ const SecondStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
     return emailReg.test(email);
   };
 
+  // 가입한 이메일 체크 수정 필요
   const isRegisteredEmail = (email: string) => {
     return false;
   };
@@ -235,7 +239,7 @@ const SecondStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
   return (
     <div className={`flex flex-col justify-center gap-8`}>
       <div>
-        <input
+        <BasicInput
           id="id"
           type="text"
           placeholder="아이디(이메일) 입력"
@@ -252,7 +256,7 @@ const SecondStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
       <BasicButton
         onClick={() => {
           setJoinStep((prev) => prev + 1);
-          setJoinData((prev) => ({ ...prev, email: debouncedEmail }));
+          // setJoinData((prev: any) => ({ ...prev, email: debouncedEmail }));
         }}
         size="md"
         color="primary"
@@ -264,11 +268,145 @@ const SecondStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
   );
 };
 
+type ThirdStepState = {
+  enteredPassword: string;
+  confirmPassword: string;
+  isButtonDisable: boolean;
+  비밀번호일치: boolean;
+  대소문자있니: boolean;
+  숫자있니: boolean;
+  특수문자있니: boolean;
+  여덟스무글자: boolean;
+};
+
+type ThirdStepAction =
+  | { type: "SET_PASSWORD"; payload: string }
+  | { type: "SET_CONFIRM_PASSWORD"; payload: string }
+  | { type: "ENABLE_BUTTON"; payload: boolean }
+  | { type: "SET_SAME_PASSWORD"; payload: boolean }
+  | { type: "CHECK_PROPER_VALUE"; payload: boolean }
+  | { type: "CHECK_INCLUDES_DIGITS"; payload: boolean }
+  | { type: "CHECK_INCLUDSE_SPECIAL_CHARS"; payload: boolean }
+  | { type: "CHECK_INCLUDES_BOTHCASES"; payload: boolean };
+
+const passwordInitial: ThirdStepState = {
+  enteredPassword: "",
+  confirmPassword: "",
+  isButtonDisable: true,
+  비밀번호일치: false,
+  대소문자있니: false,
+  숫자있니: false,
+  특수문자있니: false,
+  여덟스무글자: false,
+};
+
+const passwordReducer = (
+  state: ThirdStepState,
+  action: ThirdStepAction,
+): ThirdStepState => {
+  switch (action.type) {
+    case "SET_PASSWORD":
+      return { ...state, enteredPassword: action.payload };
+    case "SET_CONFIRM_PASSWORD":
+      return { ...state, confirmPassword: action.payload };
+    case "SET_SAME_PASSWORD":
+      return { ...state, 비밀번호일치: action.payload };
+    case "CHECK_PROPER_VALUE":
+      return { ...state, 여덟스무글자: action.payload };
+    case "CHECK_INCLUDES_DIGITS":
+      return { ...state, 숫자있니: action.payload };
+    case "CHECK_INCLUDSE_SPECIAL_CHARS":
+      return { ...state, 특수문자있니: action.payload };
+    case "CHECK_INCLUDES_BOTHCASES":
+      return { ...state, 대소문자있니: action.payload };
+    default:
+      return state;
+  }
+};
 //회원가입 세번째 단계
-const ThirdStep = ({ setJoinStep }: TStepComponent) => {
+const ThirdStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
+  const [state, dispatch] = useReducer(passwordReducer, passwordInitial);
+  const debouncedPassword = useDebounce(state.enteredPassword, 300);
+  const debouncedConfirmPassword = useDebounce(state.confirmPassword, 300);
+  function hasNumber(str: string) {
+    const regex = /\d/;
+    return regex.test(str);
+  }
+  function hasSpecialCharacter(str: string) {
+    const regex = /[^a-zA-Z0-9가-힣]/;
+    return regex.test(str);
+  }
+  function hasBothCases(str: string) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z]).+$/;
+    return regex.test(str);
+  }
+
+  useEffect(() => {
+    if (debouncedPassword) {
+      console.log("hey..");
+      dispatch({
+        type: "CHECK_PROPER_VALUE",
+        payload:
+          8 <= debouncedPassword.length && debouncedPassword.length <= 20,
+      });
+      dispatch({
+        type: "CHECK_INCLUDES_DIGITS",
+        payload: hasNumber(debouncedPassword),
+      });
+      dispatch({
+        type: "CHECK_INCLUDSE_SPECIAL_CHARS",
+        payload: hasSpecialCharacter(debouncedPassword),
+      });
+      dispatch({
+        type: "CHECK_INCLUDES_BOTHCASES",
+        payload: hasBothCases(debouncedPassword),
+      });
+    }
+
+    if (debouncedConfirmPassword && debouncedPassword) {
+      dispatch({
+        type: "SET_SAME_PASSWORD",
+        payload: debouncedPassword === debouncedConfirmPassword,
+      });
+      if (
+        state.대소문자있니 &&
+        state.숫자있니 &&
+        state.여덟스무글자 &&
+        state.특수문자있니
+      ) {
+        console.log("hey");
+      }
+      console.log();
+    }
+
+    if (
+      state.비밀번호일치 &&
+      state.대소문자있니 &&
+      state.숫자있니 &&
+      state.여덟스무글자 &&
+      state.특수문자있니
+    ) {
+      console.log("zz");
+    }
+  }, [debouncedPassword, debouncedConfirmPassword]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.id === "password") {
+      dispatch({ type: "SET_PASSWORD", payload: e.target.value });
+    }
+    if (e.target.id === "confirmpassword") {
+      dispatch({ type: "SET_CONFIRM_PASSWORD", payload: e.target.value });
+    }
+  };
+  console.log(state);
   return (
-    <div className="flex flex-col gap-2">
-      <BasicInput id="password" type="password" placeholder="비밀번호 입력" />
+    <div onChange={handleInputChange} className="flex flex-col gap-2">
+      <BasicInput
+        // value={state.enteredPassword}
+        id="password"
+        type="password"
+        placeholder="비밀번호 입력"
+      />
       <ul className="flex gap-4">
         <li className="flex items-center gap-1">
           <span>대소문자</span>
@@ -278,7 +416,7 @@ const ThirdStep = ({ setJoinStep }: TStepComponent) => {
             viewBox="0 0 12 9"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={`text-gray-500`}
+            className={` ${state.대소문자있니 ? "text-accent-red" : "text-gray-500"}`}
           >
             <path
               d="M0.5 4L4.5 8L11.5 0.5"
@@ -294,8 +432,7 @@ const ThirdStep = ({ setJoinStep }: TStepComponent) => {
             height="9"
             viewBox="0 0 12 9"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className={`text-gray-500`}
+            className={` ${state.숫자있니 ? "text-accent-red" : "text-gray-500"}`}
           >
             <path
               d="M0.5 4L4.5 8L11.5 0.5"
@@ -312,7 +449,7 @@ const ThirdStep = ({ setJoinStep }: TStepComponent) => {
             viewBox="0 0 12 9"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={`text-gray-500`}
+            className={`${state.특수문자있니 ? "text-accent-red" : "text-gray-500"}`}
           >
             <path
               d="M0.5 4L4.5 8L11.5 0.5"
@@ -329,7 +466,7 @@ const ThirdStep = ({ setJoinStep }: TStepComponent) => {
             viewBox="0 0 12 9"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={`text-gray-500`}
+            className={` ${state.여덟스무글자 ? "text-accent-red" : "text-gray-500"}`}
           >
             <path
               d="M0.5 4L4.5 8L11.5 0.5"
@@ -352,7 +489,7 @@ const ThirdStep = ({ setJoinStep }: TStepComponent) => {
           viewBox="0 0 12 9"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={`text-gray-500`}
+          className={` ${state.비밀번호일치 ? "text-accent-red" : "text-gray-500"}`}
         >
           <path
             d="M0.5 4L4.5 8L11.5 0.5"
@@ -377,7 +514,7 @@ const JoinData = createContext({});
 const Join: React.FC = () => {
   const [joinData, setJoinData] = useState();
   console.log(joinData);
-  const [joinStep, setJoinStep] = useState(1);
+  const [joinStep, setJoinStep] = useState(3);
   const steps: { [key: number]: Step } = {
     1: {
       title: (

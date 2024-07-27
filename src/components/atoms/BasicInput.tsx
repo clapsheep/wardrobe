@@ -9,9 +9,17 @@ interface Tinput {
   placeholder: string;
   label?: string;
   className?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const BasicInput = ({ id, type, placeholder, label, className }: Tinput) => {
+const BasicInput = ({
+  id,
+  type,
+  placeholder,
+  label,
+  className,
+  onChange,
+}: Tinput) => {
   const [inputTypeState, setInputTypeState] = useState(type);
 
   const handleVisibility = () => {
@@ -38,6 +46,7 @@ const BasicInput = ({ id, type, placeholder, label, className }: Tinput) => {
       <input
         id={id}
         name={id}
+        onChange={onChange}
         type={inputTypeState}
         className="h-full w-full rounded-sm border border-gray-300 px-[14px] py-[10px] text-b-2-regular placeholder:text-gray-300"
         placeholder={placeholder}
