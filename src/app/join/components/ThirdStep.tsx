@@ -3,7 +3,7 @@ import { useJoinData } from "../JoinContext";
 import { useReducer, useEffect } from "react";
 import { passwordReducer } from "../utils/joinReducer";
 import { BasicInput, BasicButton } from "@/components/atoms";
-
+import { hasNumber, hasBothCases, hasSpecialCharacter } from "@/lib/utils";
 interface TStepComponent {
   setJoinStep: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -34,19 +34,6 @@ const ThirdStep = ({ setJoinStep }: TStepComponent) => {
   const [state, dispatch] = useReducer(passwordReducer, passwordInitial);
   const debouncedPassword = useDebounce(state.enteredPassword, 300);
   const debouncedConfirmPassword = useDebounce(state.confirmPassword, 300);
-
-  function hasNumber(str: string) {
-    const regex = /\d/;
-    return regex.test(str);
-  }
-  function hasSpecialCharacter(str: string) {
-    const regex = /[^a-zA-Z0-9가-힣]/;
-    return regex.test(str);
-  }
-  function hasBothCases(str: string) {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z]).+$/;
-    return regex.test(str);
-  }
 
   const style = {
     li: "flex items-center gap-1 text-b-3-regular",
