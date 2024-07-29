@@ -4,22 +4,14 @@ import { useReducer, useEffect } from "react";
 import { emailReducer } from "../utils/joinReducer";
 import { BasicInput, BasicButton } from "@/components/atoms";
 // import { isProperEmail, isRegisteredEmail } from "@/lib/utils";
-
-interface TStepComponent {
-  setJoinStep: React.Dispatch<React.SetStateAction<number>>;
-}
-
-type SecondStepState = {
-  enteredEmail: string;
-  isButtonDisabled: boolean;
-  errorMessage: string;
-};
+import { TStepComponent, SecondStepState, TJoinData } from "../type";
 
 const initialState: SecondStepState = {
   enteredEmail: "",
   isButtonDisabled: true,
   errorMessage: "",
 };
+
 const SecondStep = ({ setJoinStep }: TStepComponent) => {
   const { setJoinData } = useJoinData();
   const [state, dispatch] = useReducer(emailReducer, initialState);
@@ -74,7 +66,10 @@ const SecondStep = ({ setJoinStep }: TStepComponent) => {
       <BasicButton
         onClick={() => {
           setJoinStep((prev) => prev + 1);
-          setJoinData((prev: any) => ({ ...prev, email: debouncedEmail }));
+          setJoinData((prev: TJoinData) => ({
+            ...prev,
+            email: debouncedEmail,
+          }));
         }}
         size="md"
         color="primary"

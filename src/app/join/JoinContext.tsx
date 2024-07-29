@@ -1,7 +1,8 @@
 import { createContext, useState, useContext } from "react";
+import { TJoinData } from "./type";
 
 type JoinDataContextType = {
-  joinData: any;
+  joinData: TJoinData;
   setJoinData: React.Dispatch<React.SetStateAction<any>>;
 };
 

@@ -3,20 +3,8 @@ import { useJoinData } from "../JoinContext";
 import { useReducer, useEffect } from "react";
 import { passwordReducer } from "../utils/joinReducer";
 import { BasicInput, BasicButton } from "@/components/atoms";
+import { TStepComponent, ThirdStepState, TJoinData } from "../type";
 // import { hasNumber, hasBothCases, hasSpecialCharacter } from "@/lib/utils";
-interface TStepComponent {
-  setJoinStep: React.Dispatch<React.SetStateAction<number>>;
-}
-type ThirdStepState = {
-  enteredPassword: string;
-  confirmPassword: string;
-  isButtonDisable: boolean;
-  비밀번호일치: boolean;
-  대소문자있니: boolean;
-  숫자있니: boolean;
-  특수문자있니: boolean;
-  여덟스무글자: boolean;
-};
 
 const passwordInitial: ThirdStepState = {
   enteredPassword: "",
@@ -186,7 +174,7 @@ const ThirdStep = ({ setJoinStep }: TStepComponent) => {
       </div>
       <BasicButton
         onClick={() =>
-          setJoinData((prev: any) => ({
+          setJoinData((prev: TJoinData) => ({
             ...prev,
             password: debouncedPassword,
             passwordConfirm: debouncedConfirmPassword,

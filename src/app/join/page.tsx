@@ -1,13 +1,10 @@
 "use client";
+import { Step } from "./type";
 import { useState } from "react";
 import { JoinDataProvider } from "./JoinContext";
 import { Progressbar } from "@/components/atoms";
 import { FirstStep, SecondStep, ThirdStep } from "./components";
 
-interface Step {
-  title: JSX.Element;
-  component: JSX.Element;
-}
 const Join: React.FC = () => {
   const [joinStep, setJoinStep] = useState(1);
   const steps: { [key: number]: Step } = {

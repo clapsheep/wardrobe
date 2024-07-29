@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { useJoinData } from "../JoinContext";
 import { Checkbox, BasicButton } from "@/components/atoms";
+import { TStepComponent, CheckState } from "../type";
 
-interface TStepComponent {
-  setJoinStep: React.Dispatch<React.SetStateAction<number>>;
-}
-type CheckState = Record<string, boolean> & { all: boolean };
 const FirstStep = ({ setJoinStep }: TStepComponent) => {
   const { setJoinData } = useJoinData();
   const List = [
