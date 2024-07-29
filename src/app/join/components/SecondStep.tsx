@@ -3,7 +3,7 @@ import { useJoinData } from "../JoinContext";
 import { useReducer, useEffect } from "react";
 import { emailReducer } from "../utils/joinReducer";
 import { BasicInput, BasicButton } from "@/components/atoms";
-import { isProperEmail, isRegisteredEmail } from "@/lib/utils";
+// import { isProperEmail, isRegisteredEmail } from "@/lib/utils";
 
 interface TStepComponent {
   setJoinStep: React.Dispatch<React.SetStateAction<number>>;
@@ -24,6 +24,15 @@ const SecondStep = ({ setJoinStep }: TStepComponent) => {
   const { setJoinData } = useJoinData();
   const [state, dispatch] = useReducer(emailReducer, initialState);
   const debouncedEmail = useDebounce(state.enteredEmail, 300);
+  const isProperEmail = (email: string) => {
+    const emailReg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+    return emailReg.test(email);
+  };
+
+  // 가입한 이메일 체크 수정 필요
+  const isRegisteredEmail = (email: string) => {
+    return false;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "SET_EMAIL", payload: e.target.value });
