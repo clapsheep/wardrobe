@@ -282,7 +282,6 @@ type ThirdStepState = {
 type ThirdStepAction =
   | { type: "SET_PASSWORD"; payload: string }
   | { type: "SET_CONFIRM_PASSWORD"; payload: string }
-  | { type: "ENABLE_BUTTON"; payload: boolean }
   | { type: "SET_SAME_PASSWORD"; payload: boolean }
   | { type: "CHECK_PROPER_VALUE"; payload: boolean }
   | { type: "CHECK_INCLUDES_DIGITS"; payload: boolean }
@@ -343,7 +342,6 @@ const ThirdStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
 
   useEffect(() => {
     if (debouncedPassword) {
-      console.log("hey..");
       dispatch({
         type: "CHECK_PROPER_VALUE",
         payload:
@@ -368,25 +366,6 @@ const ThirdStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
         type: "SET_SAME_PASSWORD",
         payload: debouncedPassword === debouncedConfirmPassword,
       });
-      if (
-        state.대소문자있니 &&
-        state.숫자있니 &&
-        state.여덟스무글자 &&
-        state.특수문자있니
-      ) {
-        console.log("hey");
-      }
-      console.log();
-    }
-
-    if (
-      state.비밀번호일치 &&
-      state.대소문자있니 &&
-      state.숫자있니 &&
-      state.여덟스무글자 &&
-      state.특수문자있니
-    ) {
-      console.log("zz");
     }
   }, [debouncedPassword, debouncedConfirmPassword]);
 
@@ -502,6 +481,17 @@ const ThirdStep = ({ setJoinStep, setJoinData }: TStepComponent) => {
         onClick={() => console.log("완룡")}
         size="md"
         color="primary"
+        disabled={
+          !(
+            state.비밀번호일치 &&
+            state.대소문자있니 &&
+            state.비밀번호일치 &&
+            state.숫자있니 &&
+            state.숫자있니 &&
+            state.여덟스무글자 &&
+            state.특수문자있니
+          )
+        }
       >
         완료
       </BasicButton>
