@@ -5,7 +5,7 @@ interface TProgressbar {
 const Progressbar = ({ max, step }: TProgressbar) => {
   const progressWidth = `${(step / max) * 100}%`;
   const style = {
-    bar: `flex h-1.5 w-full overflow-hidden bg-gray-100`,
+    bar: `flex h-1.5 w-full overflow-hidden bg-gray-100 mobile:h-1`,
     progress: `flex flex-col will-change justify-center overflow-hidden whitespace-nowrap bg-black text-center text-xs text-white transition duration-500 ease-in-out`,
   };
 
