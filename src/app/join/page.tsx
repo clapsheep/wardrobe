@@ -41,8 +41,8 @@ const Join: React.FC = () => {
   return (
     <JoinDataProvider>
       <main className="mx-auto flex w-96 flex-col items-center justify-center gap-9 pb-96">
-        <div className="flex w-full flex-col items-center gap-9">
-          <h2 className="text-h-1-bold">간편가입</h2>
+        <div className="flex w-full flex-col items-center gap-9 mobile:py-4">
+          <h2 className="text-h-1-bold mobile:hidden">간편가입</h2>
           <Progressbar max={Object.keys(steps).length} step={joinStep} />
           <div className="w-full">
             <p className="text-h-5-semibold">{currentStep.title}</p>
