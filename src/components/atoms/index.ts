@@ -7,3 +7,4 @@ export { default as BasicButton } from "./BasicButton";
 export { default as SearchInput } from "./SearchInput";
 export { default as Progressbar } from "./Progressbar";
 export { default as ResponsiveComponent } from "./ResponsiveComponent";
+export { default as Modal } from "./modal";

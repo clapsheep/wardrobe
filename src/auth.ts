@@ -1,11 +1,8 @@
-import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import NextAuth from "next-auth";
-import { clientPromise } from "@/lib/utils/dbConnect";
 import Credentials from "next-auth/providers/credentials";
 import { getUserFromDb } from "./lib/utils/getUserFromDb";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: MongoDBAdapter(clientPromise),
   providers: [
     Credentials({
       credentials: {
@@ -21,9 +18,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           credentials.username as string,
           credentials.password as string,
         );
+        console.log(user);
 
         if (!user) {
-          throw new Error("이메일 또는 비밀번호가 올바르지 않습니다.");
+          throw new Error("사용자를 찾을 수 없습니다.");
         }
 
         return user;

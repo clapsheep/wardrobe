@@ -1,8 +1,8 @@
 import { TStyle } from "@/types/DatabaseTypes";
 import { Svg } from "@/components/atoms";
-import Image from "next/image";
 import Link from "next/link";
 import "swiper/css";
+import { StyleCard } from "../molecules/StyleCard";
 
 const RecommendStyleByItemForDesktop = ({
   data,
@@ -26,25 +26,7 @@ const RecommendStyleByItemForDesktop = ({
         </p>
         <ul className="mt-6 flex justify-start gap-4 mobile:gap-2">
           {item.style.map((style) => {
-            return (
-              <li
-                key={style._id}
-                className="w-[calc(25%-1rem)] min-w-[150px] max-w-[220px]"
-              >
-                <figure className="relative w-full pt-[120%]">
-                  <Image
-                    className="object-cover"
-                    sizes="(max-width:540px) 100vw"
-                    fill
-                    src={style.image}
-                    alt=""
-                  />
-                  <figcaption className="sr-only">
-                    {style.hashtag.join()}
-                  </figcaption>
-                </figure>
-              </li>
-            );
+            return <StyleCard key={style._id} style={style} />;
           })}
         </ul>
       </li>

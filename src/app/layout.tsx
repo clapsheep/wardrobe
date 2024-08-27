@@ -21,14 +21,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  stylecardmodal,
 }: Readonly<{
   children: React.ReactNode;
+  stylecardmodal: React.ReactNode;
 }>) {
+  console.log(stylecardmodal);
+
   return (
     <html lang="ko-KR">
-      <body className={`${poppins.className}`}>
+      <body className={`${poppins.className} relative`}>
         <Header />
         {children}
+        {stylecardmodal}
         <Footer />
       </body>
     </html>
