@@ -8,3 +8,4 @@ export { default as FloatingButton } from "./FloatingButton";
 export { default as SearchInput } from "./SearchInput";
 export { default as Progressbar } from "./Progressbar";
 export { default as ResponsiveComponent } from "./ResponsiveComponent";
+export { default as Modal } from "./modal";

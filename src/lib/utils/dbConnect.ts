@@ -1,12 +1,10 @@
 import mongoose, { Mongoose } from "mongoose";
-import { MongoClient } from "mongodb";
 
 declare global {
   var mongoose: {
     promise: Promise<Mongoose> | null;
     conn: Mongoose | null;
   };
-  var mongoClientPromise: Promise<MongoClient> | null;
 }
 
 const { MONGO_URI } = process.env;
@@ -29,18 +27,7 @@ async function dbConnect() {
   return conn;
 }
 
-let clientPromise: Promise<MongoClient>;
-
-if (process.env.NODE_ENV === "development") {
-  if (!global.mongoClientPromise) {
-    global.mongoClientPromise = new MongoClient(MONGO_URI).connect();
-  }
-  clientPromise = global.mongoClientPromise;
-} else {
-  clientPromise = new MongoClient(MONGO_URI).connect();
-}
-
-export { dbConnect, clientPromise };
+export { dbConnect };
 
 // 몽구스가 자꾸 캐싱해서 불편해서 끔
 // import mongoose, { Mongoose } from "mongoose";

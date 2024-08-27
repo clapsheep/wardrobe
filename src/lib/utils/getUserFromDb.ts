@@ -15,8 +15,5 @@ export async function getUserFromDb(username: string, password: string) {
     return null;
   }
 
-  return {
-    id: user._id.toString(),
-    username: user.username,
-  };
+  return user;
 }

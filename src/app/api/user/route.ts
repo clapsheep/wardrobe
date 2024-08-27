@@ -1,7 +1,5 @@
 import { dbConnect } from "@/lib/utils/dbConnect";
 import { User } from "@/lib/models/schema";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { saltAndHashPassword } from "@/lib/utils";
 
 export const GET = async () => {
@@ -28,14 +26,7 @@ export const POST = async (req: Request) => {
     user.password = await saltAndHashPassword(password);
     await user.save();
 
-    const payload = { user: { id: user._id } };
-    let createdToken;
-    jwt.sign(payload, "jwtSecret", { expiresIn: "1h" }, (err, token) => {
-      if (err) throw err;
-      createdToken = token;
-    });
-
-    return Response.json({ createdToken });
+    return Response.json({ user });
   } catch (error: any) {
     return Response.json({ error: error.message });
   }

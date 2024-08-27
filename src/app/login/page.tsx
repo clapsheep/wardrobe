@@ -4,12 +4,7 @@ import { auth, signIn } from "@/auth";
 const LoginPage = async () => {
   const loginAction = async (formData: FormData) => {
     "use server";
-    // const loginFormData = {
-    //   username: formData.get("username"),
-    //   password: formData.get("password"),
-    // };
     await signIn("credentials", formData);
-    // console.log(loginFormData.username, loginFormData.password);
   };
   const session = await auth();
   console.log("********뭐나오냐********", session);

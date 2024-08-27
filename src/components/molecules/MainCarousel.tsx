@@ -18,7 +18,9 @@ export const MainCarouselDesktop = ({ list }: { list: TStyle[] }) => {
         disableOnInteraction: false,
       }}
     >
-      {list.map((style) => {
+      {list?.map((style) => {
+        console.log(list);
+
         return (
           <SwiperSlide key={style._id}>
             <figure className="relative aspect-[3/4] max-h-[408px] min-h-[220px]">
@@ -56,7 +58,7 @@ export const MainCarouselMobile = ({ list }: { list: TStyle[] }) => {
       // onSlideChange={() => console.log("slide Change")}
       // onSwiper={(swiper) => console.log(swiper)}
     >
-      {list.map((style) => {
+      {list?.map((style) => {
         return (
           <SwiperSlide key={style._id}>
             <figure className="relative h-[600px] w-full bg-black">
