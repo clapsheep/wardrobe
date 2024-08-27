@@ -1,1 +1,1 @@
-export { getFullList, getOneUser, createUser } from "./fetch";
+export { getFullList, getOneUser, createUser, getStyle } from "./fetch";

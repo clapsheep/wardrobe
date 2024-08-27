@@ -19,8 +19,6 @@ export const MainCarouselDesktop = ({ list }: { list: TStyle[] }) => {
       }}
     >
       {list?.map((style) => {
-        console.log(list);
-
         return (
           <SwiperSlide key={style._id}>
             <figure className="relative aspect-[3/4] max-h-[408px] min-h-[220px]">

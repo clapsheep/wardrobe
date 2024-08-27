@@ -26,8 +26,6 @@ export default function RootLayout({
   children: React.ReactNode;
   stylecardmodal: React.ReactNode;
 }>) {
-  console.log(stylecardmodal);
-
   return (
     <html lang="ko-KR">
       <body className={`${poppins.className} relative`}>

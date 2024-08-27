@@ -14,7 +14,7 @@ export const GET = async (
     }
 
     const style = await Style.findOne({ _id: styleId });
-    return Response.json({ style });
+    return Response.json(style);
   } catch (error: any) {
     return Response.json({ error: error.message });
   }
