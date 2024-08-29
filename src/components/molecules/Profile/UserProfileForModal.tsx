@@ -8,11 +8,21 @@ type Props = {
 };
 
 const UserProfileForModal = ({ user }: Props) => {
+  const { userInfo } = user;
+
   return (
-    <div className="flex items-center gap-[14px]">
+    <div className="flex gap-[14px] pt-20">
       <UserImg sizeType={"small"} />
-      <div>
+      <div className="flex flex-col">
         <UserName user={user} sizeType={"small"} />
+        <div className="flex gap-[6px] text-b-2-regular text-gray-450">
+          <span>{`${userInfo.height}cm`}</span>
+          &middot;
+          <span>{`${userInfo.weight}kg`}</span>|
+          <span>{`상의 ${userInfo.top}`}</span>
+          &middot;
+          <span>{`하의 ${userInfo.bottom}`}</span>
+        </div>
       </div>
     </div>
   );

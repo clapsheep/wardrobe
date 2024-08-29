@@ -35,17 +35,20 @@ const UserStyleSchema = new Schema(
   { timestamps: true },
 );
 
-const DressroomItemSchema = new Schema({
-  _id: { type: Types.ObjectId, required: true },
-  site: { type: String, required: true, unique: true },
-  name: { type: String, required: true },
-  image: { type: String, required: true },
-  price: { type: Number, required: true },
-  category: { type: String, required: true },
-  color: { type: String, require: true },
-  season: { type: [String] },
-  size: { type: String, require: true },
-});
+const DressroomItemSchema = new Schema(
+  {
+    _id: { type: Types.ObjectId, required: true },
+    site: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    image: { type: String, required: true },
+    price: { type: Number, required: true },
+    category: { type: String, required: true },
+    color: { type: String, require: true },
+    season: { type: [String] },
+    size: { type: String, require: true },
+  },
+  { timestamps: true, collection: "dressroom" },
+);
 
 export const UserSchema = new Schema(
   {
@@ -58,7 +61,7 @@ export const UserSchema = new Schema(
       top: { type: String },
       bottom: { type: String },
     },
-    dressroom: [{ type: DressroomItemSchema }],
+    dressroom: [{ type: DressroomItemSchema, ref: "dressroom" }],
     styles: [{ type: UserStyleSchema }],
     // styles: [{ type: Types.ObjectId, ref: "style" }],
     bookmark: [{ type: Types.ObjectId, ref: "style" }],

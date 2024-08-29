@@ -14,7 +14,7 @@ const ModalCloseBtn = () => {
       onClick={handleClose}
       className="absolute right-4 top-4 z-20 text-xl font-bold text-white"
     >
-      <Svg id="cancel" />
+      <Svg id="cancel" color="#A0A0A0" />
     </button>
   );
 };

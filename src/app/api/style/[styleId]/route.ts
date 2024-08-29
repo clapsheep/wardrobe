@@ -1,4 +1,3 @@
-import { createUser } from "./../../../../lib/api/fetch";
 import { dbConnect } from "@/lib/utils/dbConnect";
 import { Style } from "@/lib/models/schema";
 import { isValidObjectId } from "mongoose";
@@ -19,6 +18,7 @@ export const GET = async (
         path: "createUser",
       })
       .populate({ path: "product" });
+    // .populate({ path: "dressroom" });
     return Response.json(style);
   } catch (error: any) {
     return Response.json({ error: error.message });
