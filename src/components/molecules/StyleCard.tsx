@@ -3,7 +3,7 @@ import { TStyle } from "@/types/DatabaseTypes";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Svg, Svg2 } from "@/components/atoms";
+import { Svg } from "@/components/atoms";
 
 interface StyleCardProps {
   style: TStyle;
