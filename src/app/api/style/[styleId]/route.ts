@@ -16,6 +16,9 @@ export const GET = async (
     const style = await Style.findOne({ _id: styleId })
       .populate({
         path: "createUser",
+        populate: {
+          path: "dressroom styles",
+        },
       })
       .populate({ path: "product" });
     // .populate({ path: "dressroom" });

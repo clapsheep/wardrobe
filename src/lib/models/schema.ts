@@ -32,7 +32,7 @@ const UserStyleSchema = new Schema(
     image: { type: String, require: true },
     hashtag: { type: [String] },
   },
-  { timestamps: true },
+  { timestamps: true, collection: "style" },
 );
 
 const DressroomItemSchema = new Schema(
@@ -62,8 +62,8 @@ export const UserSchema = new Schema(
       bottom: { type: String },
     },
     dressroom: [{ type: DressroomItemSchema, ref: "dressroom" }],
-    styles: [{ type: UserStyleSchema }],
-    // styles: [{ type: Types.ObjectId, ref: "style" }],
+    styles: [{ type: UserStyleSchema, ref: "style" }],
+
     bookmark: [{ type: Types.ObjectId, ref: "style" }],
     like: [{ type: Types.ObjectId, ref: "style" }],
   },

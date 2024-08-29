@@ -21,18 +21,19 @@ export const MainCarouselDesktop = ({ list }: { list: TStyle[] }) => {
       {list?.map((style) => {
         return (
           <SwiperSlide key={style._id}>
-            <figure className="relative aspect-[3/4] max-h-[408px] min-h-[220px]">
+            {/* <figure className="relative aspect-[3/4] max-h-[408px] min-h-[220px]"> */}
+            <figure className="relative aspect-[3/4] max-h-[408px]">
               <Image
                 priority
                 sizes="40vw"
-                className="object-contain"
                 fill
-                alt=""
+                alt={
+                  style.hashtag[0] ??
+                  `${style.product[0].name}착용 유저의 스타일`
+                }
+                objectFit="contain"
                 src={style.image}
               />
-              <figcaption className="sr-only">
-                {style.hashtag.join()}
-              </figcaption>
             </figure>
           </SwiperSlide>
         );

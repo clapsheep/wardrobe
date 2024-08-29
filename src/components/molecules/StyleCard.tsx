@@ -17,11 +17,8 @@ export const StyleCard = ({ style }: StyleCardProps) => {
     setIsBookmarked(!isBookmarked);
   };
   return (
-    <li
-      key={style._id}
-      className="group relative w-[calc(25%-1rem)] min-w-[150px] max-w-[220px]"
-    >
-      <Link href={`/stylecard/${style._id}`} className="block">
+    <li key={style._id} className="group relative max-w-[260px]">
+      <Link href={`/style/${style._id}`} className="block">
         <div className="absolute inset-0 z-10 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-30"></div>
         <button
           type="button"
