@@ -31,7 +31,7 @@ export const MainCarouselDesktop = ({ list }: { list: TStyle[] }) => {
                   style.hashtag[0] ??
                   `${style.product[0].name}착용 유저의 스타일`
                 }
-                objectFit="contain"
+                className="object-contain"
                 src={style.image}
               />
             </figure>

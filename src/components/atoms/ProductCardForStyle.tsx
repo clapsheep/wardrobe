@@ -26,7 +26,7 @@ const ProductCardForStyle = ({ item, size }: Props) => {
         </span>
         <Svg size={24} id="sizeBadge" />
       </div>
-      <Image objectFit="contain" src={item.image} alt={item.name} fill />
+      <Image className="object-contain" src={item.image} alt={item.name} fill />
     </li>
   );
 };
