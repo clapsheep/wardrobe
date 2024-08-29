@@ -43,3 +43,16 @@ export const deleteUser = async (userId: string) => {
     return NextResponse.json({ err: err.message });
   }
 };
+
+/* style 관련 API */
+export const getStyle = async (styleId: string) => {
+  try {
+    const res = await fetch(`${MONGO_API}/style/${styleId}`, {
+      cache: "no-cache",
+    });
+    const style = await res.json();
+    return style;
+  } catch (err: any) {
+    return NextResponse.json({ err: err.message });
+  }
+};

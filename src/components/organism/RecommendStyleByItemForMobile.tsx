@@ -6,6 +6,7 @@ import Link from "next/link";
 import "swiper/css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import { StyleCard } from "../molecules/StyleCard";
 const RecommendStyleByItemForMobile = ({
   data,
 }: {
@@ -38,7 +39,7 @@ const RecommendStyleByItemForMobile = ({
                 key={style._id}
                 className="w-[calc(25%-1rem)] min-w-[150px] max-w-[220px]"
               >
-                <figure className="relative w-full pt-[120%]">
+                {/* <figure className="relative w-full pt-[120%]">
                   <Image
                     className="object-cover"
                     sizes="(max-width:540px) 100vw"
@@ -49,7 +50,8 @@ const RecommendStyleByItemForMobile = ({
                   <figcaption className="sr-only">
                     {style.hashtag.join()}
                   </figcaption>
-                </figure>
+                </figure> */}
+                <StyleCard style={style} />
               </SwiperSlide>
             );
           })}

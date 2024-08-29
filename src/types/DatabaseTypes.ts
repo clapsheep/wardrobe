@@ -15,8 +15,8 @@ interface User {
 }
 
 interface Style {
-  createUser: String;
-  product: String[];
+  createUser: TUser;
+  product: TProduct[];
   image: string;
   hashtag: string[];
 }

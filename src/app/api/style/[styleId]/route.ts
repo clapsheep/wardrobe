@@ -13,8 +13,13 @@ export const GET = async (
       return Response.json({ error: "유효하지 않은 Id 입니다." });
     }
 
-    const style = await Style.findOne({ _id: styleId });
-    return Response.json({ style });
+    const style = await Style.findOne({ _id: styleId })
+      .populate({
+        path: "createUser",
+      })
+      .populate({ path: "product" });
+    // .populate({ path: "dressroom" });
+    return Response.json(style);
   } catch (error: any) {
     return Response.json({ error: error.message });
   }

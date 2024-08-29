@@ -36,7 +36,7 @@ export default function Header() {
     <>
       {/* 모바일 헤더 */}
       <header
-        className={`sticky top-0 z-10 hidden h-12 w-full bg-white px-2 mobile:flex mobile:items-center mobile:justify-between`}
+        className={`sticky top-0 z-[100] hidden h-12 w-full bg-white px-2 mobile:flex mobile:items-center mobile:justify-between`}
       >
         <Link href="/">
           <Svg id="logo-mobile_Black" />
@@ -56,7 +56,7 @@ export default function Header() {
       )}
       {/* 데스크톱 헤더 */}
       <header
-        className={`sticky top-0 z-10 my-5 w-full bg-white font-sans text-gray-800 mobile:hidden ${scroll ? "h-28" : "h-36"}`}
+        className={`sticky top-0 z-[100] my-5 w-full bg-white font-sans text-gray-800 mobile:hidden ${scroll ? "h-28" : "h-36"}`}
       >
         <nav className="relative flex h-full w-screen items-center justify-between px-20 mobile:px-1">
           <ul className="flex justify-between gap-10 text-h-2-bold mobile:hidden">
