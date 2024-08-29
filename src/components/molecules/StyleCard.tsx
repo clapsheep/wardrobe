@@ -32,7 +32,6 @@ export const StyleCard = ({ style }: StyleCardProps) => {
             size={28}
             id={isBookmarked ? "bookmark_true2" : "bookmark_false2"}
           />
-          {/* 흰색 svg가 안되서 임시로 검정색으로 일단 함*/}
         </button>
         <figure className="relative w-full pt-[120%]">
           <Image
