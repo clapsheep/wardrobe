@@ -22,7 +22,7 @@ const StyleModal = ({ data }: { data: TStyle }) => {
             src={image}
             alt={`${createUser.username}의 스타일`}
             fill
-            className="object-contain"
+            className="object-cover"
           />
         </figure>
         <section className="flex w-1/2 flex-col justify-between overflow-y-auto p-5">

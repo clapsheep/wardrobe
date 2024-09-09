@@ -1,12 +1,7 @@
+import { Footer, Header } from "@/components/molecules";
+import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import "@/styles/globals.css";
-import {
-  Header,
-  SearchModal,
-  Footer,
-  MobileHamburger,
-} from "@/components/molecules";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,17 +16,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  stylecardmodal,
+  stylemodal,
 }: Readonly<{
   children: React.ReactNode;
-  stylecardmodal: React.ReactNode;
+  stylemodal: React.ReactNode;
 }>) {
   return (
     <html lang="ko-KR">
       <body className={`${poppins.className} relative`}>
         <Header />
         {children}
-        {stylecardmodal}
+        {stylemodal}
         <Footer />
       </body>
     </html>

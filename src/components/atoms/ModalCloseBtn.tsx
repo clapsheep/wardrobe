@@ -3,7 +3,7 @@ import React from "react";
 import Svg from "./Svg";
 import { useRouter } from "next/navigation";
 
-const ModalCloseBtn = () => {
+const ModalCloseBtn = ({ className }: { className?: string }) => {
   const router = useRouter();
 
   const handleClose = () => {
@@ -12,7 +12,7 @@ const ModalCloseBtn = () => {
   return (
     <button
       onClick={handleClose}
-      className="absolute right-4 top-4 z-20 text-xl font-bold text-white"
+      className={className ? className : `absolute right-4 top-4 z-20`}
     >
       <Svg id="cancel" size={18} color="#A0A0A0" />
     </button>

@@ -56,3 +56,17 @@ export const getStyle = async (styleId: string) => {
     return NextResponse.json({ err: err.message });
   }
 };
+/* puppeteer에 url 전달 API */
+export const submitURL = async (formData: FormData) => {
+  "use server";
+  try {
+    const url = formData.get("url");
+    const res = await fetch(`${MONGO_API}/dressroom/${url}`, {
+      cache: "no-cache",
+    });
+    const data = await res.json();
+    return data;
+  } catch (err: any) {
+    return NextResponse.json({ err: err.message });
+  }
+};

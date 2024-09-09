@@ -20,7 +20,12 @@ const Page = async () => {
             <TagButton color="secondary">높은 가격순</TagButton>
           </div>
           <div className="flex gap-3">
-            <BasicButton className="px-4" size="sm" color="primary" href="#">
+            <BasicButton
+              className="px-4"
+              size="sm"
+              color="primary"
+              href="/dressroom/register"
+            >
               등록
             </BasicButton>
             <BasicButton className="px-4" size="sm" color="primary" href="#">

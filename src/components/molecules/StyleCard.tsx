@@ -35,7 +35,7 @@ export const StyleCard = ({ style }: StyleCardProps) => {
             sizes="(max-width:540px) 100vw"
             fill
             src={style.image}
-            className="object-contain"
+            className="object-cover"
             alt=""
           />
           <figcaption className="sr-only">{style.hashtag.join()}</figcaption>
