@@ -1,4 +1,4 @@
-import { dbConnect } from "@/lib/utils/dbConnect";
+import { dbConnect } from "@/lib/utils";
 import { Style, User } from "@/lib/models/schema";
 
 import { isValidObjectId } from "mongoose";

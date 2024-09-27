@@ -1,4 +1,4 @@
-import { dbConnect } from "@/lib/utils/dbConnect";
+import { dbConnect } from "@/lib/utils";
 import { Style } from "@/lib/models/schema";
 
 // 스타일 랜덤하게 GET

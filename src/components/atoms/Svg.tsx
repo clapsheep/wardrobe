@@ -30,13 +30,13 @@ export default function Svg({
     if (hasMobile) {
       return (
         <svg width={127} height={24}>
-          <use href={`/svg/_sprite2.svg#logo-mobile_Black`} />
+          <use href={`/svg/_sprite.svg#logo-mobile_Black`} />
         </svg>
       );
     }
     return (
       <svg width={255} height={60}>
-        <use href={`/svg/_sprite2.svg#logo-web_Black`} />
+        <use href={`/svg/_sprite.svg#logo-web_Black`} />
       </svg>
     );
   }
@@ -47,7 +47,7 @@ export default function Svg({
       style={iconStyles}
       {...restProps}
     >
-      <use href={`/svg/_sprite2.svg#${id}`} />
+      <use href={`/svg/_sprite.svg#${id}`} />
     </svg>
   );
 }

@@ -1,4 +1,4 @@
-import { dbConnect } from "@/lib/utils/dbConnect";
+import { dbConnect } from "@/lib/utils";
 import { User, Product } from "@/lib/models/schema";
 import { TDressroom } from "@/types/DatabaseTypes";
 import { isValidObjectId } from "mongoose";

@@ -15,7 +15,7 @@ export default function UserImg({ sizeType }: UserImgProps) {
       className={`${style.imgSize} ${style.margin} relative overflow-hidden rounded-full`}
     >
       <Image
-        style={{ objectFit: "cover" }}
+        className="object-cover"
         fill={true}
         src="/svg/defaultProfile.svg"
         alt=""

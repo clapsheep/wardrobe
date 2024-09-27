@@ -1,4 +1,4 @@
-import { dbConnect } from "@/lib/utils/dbConnect";
+import { dbConnect } from "@/lib/utils";
 import { Product } from "@/lib/models/schema";
 
 export const GET = async () => {

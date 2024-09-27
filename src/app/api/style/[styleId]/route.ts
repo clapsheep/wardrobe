@@ -1,4 +1,4 @@
-import { dbConnect } from "@/lib/utils/dbConnect";
+import { dbConnect } from "@/lib/utils";
 import { Style } from "@/lib/models/schema";
 import { isValidObjectId } from "mongoose";
 
@@ -16,6 +16,9 @@ export const GET = async (
     const style = await Style.findOne({ _id: styleId })
       .populate({
         path: "createUser",
+        populate: {
+          path: "dressroom styles",
+        },
       })
       .populate({ path: "product" });
     // .populate({ path: "dressroom" });

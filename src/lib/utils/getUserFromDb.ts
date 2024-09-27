@@ -1,4 +1,4 @@
-import { dbConnect } from "@/lib/utils/dbConnect";
+import { dbConnect } from "@/lib/utils";
 import { User } from "@/lib/models/schema";
 import bcrypt from "bcrypt";
 

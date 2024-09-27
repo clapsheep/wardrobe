@@ -2,6 +2,8 @@
 import Link from "next/link";
 import React from "react";
 import { useFormStatus } from "react-dom";
+import Svg from "./Svg";
+import Image from "next/image";
 
 interface Tbutton {
   type?: "submit" | "button";
@@ -28,10 +30,10 @@ const BasicButton = ({
   children,
 }: Tbutton) => {
   const sizeStyle = {
-    xs: "h-6 w-full text-b-4-regular",
-    sm: "h-9 w-full text-b-2-regular",
-    md: "h-[52px] w-full text-b-0-regular",
-    lg: "h-16 w-full text-b-0-regular",
+    xs: "h-6 text-b-4-regular",
+    sm: "h-9 text-b-2-regular",
+    md: "h-[52px] text-b-0-regular",
+    lg: "h-16 text-b-0-regular",
   };
   const colorStyle = {
     primary: "bg-black text-white",
@@ -61,7 +63,18 @@ const BasicButton = ({
         disabled={disabled || pending}
         className={`${!disabled ? colorStyle[color] : colorStyle["disabled"]} ${sizeStyle[size]} ${round ? "rounded" : ""} ${shadow ? "shadow-lg" : ""} ${className}`}
       >
-        {pending ? "로그인 중입니다." : children}
+        {pending ? (
+          <div className="flex items-center justify-center">
+            <Image
+              src="/spinner/buttonPendingSpinner.svg"
+              alt="로딩 중"
+              width={24}
+              height={24}
+            />
+          </div>
+        ) : (
+          children
+        )}
       </button>
     );
   }
