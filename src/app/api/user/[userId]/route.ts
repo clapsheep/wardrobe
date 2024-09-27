@@ -1,7 +1,6 @@
-import { dbConnect } from "@/lib/utils/dbConnect";
 import { User } from "@/lib/models/schema";
 import { isValidObjectId } from "mongoose";
-import { saltAndHashPassword } from "@/lib/utils";
+import { saltAndHashPassword, dbConnect } from "@/lib/utils";
 
 export const GET = async (
   req: Request,

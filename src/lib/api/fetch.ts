@@ -61,12 +61,15 @@ export const submitURL = async (formData: FormData) => {
   "use server";
   try {
     const url = formData.get("url");
-    const res = await fetch(`${MONGO_API}/dressroom/${url}`, {
+    const encodedUrl = encodeURIComponent(url as string);
+    const res = await fetch(`${MONGO_API}/dressroom/${encodedUrl}`, {
       cache: "no-cache",
     });
-    const data = await res.json();
-    return data;
+    const { data } = await res.json();
+    console.log(data);
+
+    return { success: true, data };
   } catch (err: any) {
-    return NextResponse.json({ err: err.message });
+    return { success: false, error: err.message };
   }
 };
