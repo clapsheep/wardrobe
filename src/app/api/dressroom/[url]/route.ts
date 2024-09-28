@@ -5,6 +5,7 @@ export async function GET(
   { params }: { params: { url: string } },
 ) {
   const startTime = Date.now();
+
   try {
     const decodedUrl = decodeURIComponent(params.url);
 
@@ -35,7 +36,7 @@ export async function GET(
         productCategoryElement
       ) {
         return {
-          site: window.location.href,
+          site: decodedUrl,
           name: productNameElement.textContent?.trim(),
           image: (productImageElement as HTMLImageElement).src,
           price: parseInt(

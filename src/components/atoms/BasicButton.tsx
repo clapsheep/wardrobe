@@ -7,6 +7,7 @@ import Image from "next/image";
 
 interface Tbutton {
   type?: "submit" | "button";
+  form?: string;
   size: "xs" | "sm" | "md" | "lg";
   color: "primary" | "secondary";
   shadow?: boolean;
@@ -19,6 +20,7 @@ interface Tbutton {
 }
 const BasicButton = ({
   type,
+  form,
   size,
   color = "primary",
   shadow = false,
@@ -59,6 +61,7 @@ const BasicButton = ({
     return (
       <button
         type={type}
+        form={form}
         onClick={onClick}
         disabled={disabled || pending}
         className={`${!disabled ? colorStyle[color] : colorStyle["disabled"]} ${sizeStyle[size]} ${round ? "rounded" : ""} ${shadow ? "shadow-lg" : ""} ${className}`}
