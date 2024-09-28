@@ -6,9 +6,9 @@ export default function Layout({
   dressroomModal: React.ReactNode;
 }) {
   return (
-    <section>
+    <>
       {children}
       {dressroomModal}
-    </section>
+    </>
   );
 }

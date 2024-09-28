@@ -5,6 +5,9 @@ interface Ttag {
   color?: "primary" | "secondary";
   disabled?: boolean;
   cancel?: boolean;
+  checkBox?: boolean;
+  id?: string;
+  checked?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
 }
@@ -13,7 +16,10 @@ const TagButton = ({
   color = "primary",
   disabled,
   cancel,
+  checkBox,
+  id,
   onClick,
+  checked,
   children,
 }: Ttag) => {
   const colorStyle = {
@@ -26,6 +32,7 @@ const TagButton = ({
   if (type) {
     return (
       <button
+        onClick={onClick}
         type={type}
         className={`flex h-8 items-center justify-center rounded-[45px] px-3 py-2 text-b-2-regular ${colorStyle[color]} ${!disabled ? colorStyle[color] : colorStyle["disabled"]}}`}
       >
@@ -44,14 +51,32 @@ const TagButton = ({
           </button>
         </div>
       );
+    } else if (checkBox) {
+      return (
+        <>
+          <input
+            type="checkbox"
+            className="peer hidden"
+            id={id}
+            checked={checked}
+          />
+          <label
+            htmlFor={id}
+            className={`flex h-8 cursor-pointer items-center justify-center rounded-[45px] px-3 py-2 text-b-2-regular peer-checked:bg-black peer-checked:text-white ${colorStyle[color]}} `}
+          >
+            {children}
+          </label>
+        </>
+      );
+    } else {
+      return (
+        <div
+          className={`flex h-8 items-center justify-center rounded-[45px] px-3 py-2 text-b-2-regular ${colorStyle[color]}}`}
+        >
+          {children}
+        </div>
+      );
     }
-    return (
-      <div
-        className={`flex h-8 items-center justify-center rounded-[45px] px-3 py-2 text-b-2-regular ${colorStyle[color]}}`}
-      >
-        {children}
-      </div>
-    );
   }
 };
 export default TagButton;

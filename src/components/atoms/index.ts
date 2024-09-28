@@ -12,3 +12,4 @@ export { default as Progressbar } from "./Progressbar";
 export { default as ModalCloseBtn } from "./ModalCloseBtn";
 export { default as ProductCardForStyle } from "./ProductCardForStyle";
 export { default as ResponsiveComponent } from "./ResponsiveComponent";
+export { default as ColorButton } from "./ColorButton";
