@@ -47,7 +47,7 @@ export default function Svg({
       style={iconStyles}
       {...restProps}
     >
-      <use href={`/svg/_sprite.svg#${id}`} />
+      <use href={`svg/_sprite.svg#${id}`} />
     </svg>
   );
 }

@@ -62,6 +62,7 @@ export const submitURL = async (formData: FormData) => {
   try {
     const url = formData.get("url");
     const encodedUrl = encodeURIComponent(url as string);
+
     const res = await fetch(`${MONGO_API}/dressroom/${encodedUrl}`, {
       cache: "no-cache",
     });

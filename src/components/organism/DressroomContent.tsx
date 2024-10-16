@@ -16,6 +16,34 @@ const DressroomContent = ({ items }: { items: TDressroom[] }) => {
   const [categoryState, setCategoryState] = useState<string[]>([]);
   const [colorState, setcolorState] = useState<string[]>([]);
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [selectedItemState, setSelectedItemState] = useState<string[]>([]);
+
+  const selectAllCheckBox = () => {
+    const allItemsId = items.map((i) => i._id);
+    let isSelectAll = true;
+
+    allItemsId.filter((i) => {
+      isSelectAll = !selectedItemState.includes(i) ? false : true;
+    });
+
+    if (isSelectAll) {
+      setSelectedItemState([]);
+    } else {
+      setSelectedItemState(allItemsId);
+    }
+  };
+  const checkBoxhandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedItemState((prev) => {
+      if (!prev.includes(e.target.id)) {
+        return [e.target.id, ...prev];
+      } else {
+        return prev.filter((i) => {
+          return i !== e.target.id;
+        });
+      }
+    });
+  };
+
   const handleEditMode = () => {
     setEditMode((prev) => !prev);
   };
@@ -117,10 +145,15 @@ const DressroomContent = ({ items }: { items: TDressroom[] }) => {
               {/* Sort */}
               <div className="flex items-center justify-center gap-2 text-gray-450">
                 <div>
-                  <span className="text-blue-500">3</span> / <span>17</span>개
-                  선택
+                  <span className="text-blue-500">
+                    {selectedItemState.length}
+                  </span>{" "}
+                  / <span>{items.length}</span>개 선택
                 </div>
-                |<button type="button">전체선택</button>
+                |
+                <button type="button" onClick={selectAllCheckBox}>
+                  전체선택
+                </button>
               </div>
 
               <div className="flex gap-3">
@@ -182,7 +215,13 @@ const DressroomContent = ({ items }: { items: TDressroom[] }) => {
         </div>
         <ul className="grid w-full grid-cols-5 gap-5">
           {items.map((item) => (
-            <DressroomItem item={item} editMode={editMode} key={item._id} />
+            <DressroomItem
+              item={item}
+              editMode={editMode}
+              checked={selectedItemState.includes(item._id)}
+              key={item._id}
+              onchange={checkBoxhandler}
+            />
           ))}
         </ul>
       </section>
@@ -193,27 +232,31 @@ export default DressroomContent;
 const DressroomItem = ({
   item,
   editMode,
+  checked,
+  onchange,
 }: {
   item: TDressroom;
   editMode: boolean;
+  checked: boolean;
+  onchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
     <li className="group relative block aspect-square shadow-lg" key={item._id}>
       {editMode ? (
-        <form id="delete-form">
+        <form id="delete-form" method="POST">
           <Checkbox
             className="absolute left-2 top-2 z-40"
             label={false}
             type="all"
-            checked={true}
+            name="checkedItem"
+            checked={checked}
             id={item._id}
+            onchange={onchange}
           >
             {item.name}
           </Checkbox>
         </form>
-      ) : (
-        ""
-      )}
+      ) : null}
       <div className="absolute inset-0 z-10 flex flex-col justify-end bg-hover-gradient px-5 pb-4 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <span className="truncate text-b-2-bold">{item.name}</span>
         <span className="mb-3 text-b-3-regular text-gray-200">
@@ -267,7 +310,7 @@ export const categories: { [key: string]: string } = {
 export const sortOptions = [
   "최신순",
   "업로드순",
-  "가다나순",
+  "가나다순",
   "낮은 가격순",
   "높은 가격순",
 ];
