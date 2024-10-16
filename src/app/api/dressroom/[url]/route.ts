@@ -13,40 +13,33 @@ export async function GET(
       headless: true,
     });
     const page = await browser.newPage();
+
     await page.goto(decodedUrl);
 
-    const scrapedData = await page.evaluate((url) => {
-      const productImageElement = document.querySelector(
-        ".sc-8j14dt-7.xxnjM img",
-      );
-      const productNameElement = document.querySelector(
-        ".sc-ysl0re-1.iROunM .text-lg",
-      );
-      const productPriceElement = document.querySelector(
-        ".sc-xz8kdb-4.iccpET .text-lg.font-semibold.text-black",
-      );
-      const productCategoryElement = document.querySelector(
-        ".sc-147svlx-1.dqyZQF a",
-      );
+    const scrapedData = await page.evaluate(() => {
+      const getMetaContent = (property: string) => {
+        const meta = document.querySelector(`meta[property="${property}"]`);
+        return meta ? meta.getAttribute("content") : null;
+      };
 
-      if (
-        productImageElement &&
-        productNameElement &&
-        productPriceElement &&
-        productCategoryElement
-      ) {
-        return {
-          site: decodedUrl,
-          name: productNameElement.textContent?.trim(),
-          image: (productImageElement as HTMLImageElement).src,
-          price: parseInt(
-            productPriceElement.textContent?.replace(/[^0-9]/g, "") || "0",
-          ),
-          category: productCategoryElement.textContent?.trim(),
-        };
-      }
-      return null;
-    }, decodedUrl);
+      const getCategory = () => {
+        const description = getMetaContent("og:description");
+        if (description) {
+          const match = description.match(/제품분류\s*:\s*([^\s>]+)/);
+          return match ? match[1] : null;
+        }
+        return null;
+      };
+
+      return {
+        site: window.location.href,
+        name: getMetaContent("og:title")?.split(" - ")[0],
+        image: getMetaContent("og:image"),
+        price: parseInt(getMetaContent("product:price:amount") || "0"),
+        category: getCategory(),
+        brand: getMetaContent("product:brand"),
+      };
+    });
 
     await browser.close();
 

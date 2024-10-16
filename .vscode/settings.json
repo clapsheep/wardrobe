@@ -6,5 +6,6 @@
   "javascript.validate.enable": false,
   "editor.quickSuggestions": {
     "strings": true
-  }
+  },
+  "git.ignoreLimitWarning": true
 }
