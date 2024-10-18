@@ -6,8 +6,9 @@ import { Svg } from "@/components/atoms";
 interface Tinput {
   id: string;
   type: "text" | "password";
-  placeholder: string;
+  placeholder?: string;
   label?: string;
+  value?: string;
   className?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -16,6 +17,7 @@ const BasicInput = ({
   id,
   type,
   placeholder,
+  value,
   label,
   className,
   onChange,
@@ -46,6 +48,7 @@ const BasicInput = ({
       <input
         id={id}
         name={id}
+        value={value}
         onChange={onChange}
         type={inputTypeState}
         className="h-full w-full rounded-sm border border-gray-300 px-[14px] py-[10px] text-b-2-regular placeholder:text-gray-300"

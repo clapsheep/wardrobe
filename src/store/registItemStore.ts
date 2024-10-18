@@ -1,7 +1,7 @@
 //https://zustand.docs.pmnd.rs/guides/nextjs#creating-a-store-per-request
 import { createStore } from "zustand";
 
-export type registItemState = {
+export type RegistItemState = {
   site: string;
   name: string;
   image: string;
@@ -9,11 +9,24 @@ export type registItemState = {
   category: string;
   brand: string;
 };
-export type registItemAction = {
-  setState: () => void;
+export type RegistItemAction = {
+  setSite: (site: string) => void;
+  setName: (name: string) => void;
+  setImage: (image: string) => void;
+  setPrice: (price: number) => void;
+  setCategory: (category: string) => void;
+  setBrand: (brand: string) => void;
+  setAllState: (
+    site: string,
+    name: string,
+    image: string,
+    price: number,
+    category: string,
+    brand: string,
+  ) => void;
 };
-export type TregistItemStore = registItemState & registItemAction;
-export const DEFAULT_RESIST_STATE = {
+export type TRegistItemStore = RegistItemState & RegistItemAction;
+export const DEFAULT_REGIST_STATE: RegistItemState = {
   site: "",
   name: "",
   image: "",
@@ -22,11 +35,18 @@ export const DEFAULT_RESIST_STATE = {
   brand: "",
 };
 
-export const registItemStore = (
-  initState: registItemState = DEFAULT_RESIST_STATE,
+export const createRegistItemStore = (
+  initState: RegistItemState = DEFAULT_REGIST_STATE,
 ) => {
-  return createStore<TregistItemStore>()((set) => ({
+  return createStore<TRegistItemStore>()((set) => ({
     ...initState,
-    setState: () => set((state) => ({})),
+    setSite: (site: string) => set((state) => ({ ...state, site })),
+    setName: (name: string) => set((state) => ({ ...state, name })),
+    setImage: (image: string) => set((state) => ({ ...state, image })),
+    setPrice: (price: number) => set((state) => ({ ...state, price })),
+    setCategory: (category: string) => set((state) => ({ ...state, category })),
+    setBrand: (brand: string) => set((state) => ({ ...state, brand })),
+    setAllState: (site, name, image, price, category, brand) =>
+      set((state) => ({ site, name, image, price, category, brand })),
   }));
 };

@@ -8,6 +8,8 @@ import {
 import { TDressroom } from "@/types/DatabaseTypes";
 import Image from "next/image";
 import { useState } from "react";
+import { useRegistModalStore } from "@/providers/registModal-store-provider";
+import { RegistItemModal, UrlInputModal } from "@/components/organism";
 
 const DressroomContent = ({ items }: { items: TDressroom[] }) => {
   // 추후에 모든 상태가 비어있을 때는 모든 상품 렌더링
@@ -17,7 +19,10 @@ const DressroomContent = ({ items }: { items: TDressroom[] }) => {
   const [colorState, setcolorState] = useState<string[]>([]);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [selectedItemState, setSelectedItemState] = useState<string[]>([]);
-
+  const { urlModal, setUrlModal } = useRegistModalStore((state) => state);
+  const handleRegistButton = () => {
+    setUrlModal();
+  };
   const selectAllCheckBox = () => {
     const allItemsId = items.map((i) => i._id);
     let isSelectAll = true;
@@ -80,8 +85,11 @@ const DressroomContent = ({ items }: { items: TDressroom[] }) => {
     //
     setSort(selectedSort);
   };
+
   return (
     <>
+      <UrlInputModal open={urlModal} />
+      <RegistItemModal open={true} />
       <aside className="box-content flex w-[304px] flex-col gap-[64px] pr-[80px]">
         <div className="flex flex-col gap-[18px]">
           {/* Season */}
@@ -196,7 +204,7 @@ const DressroomContent = ({ items }: { items: TDressroom[] }) => {
                   className="px-4"
                   size="sm"
                   color="primary"
-                  href="/dressroom/register"
+                  onClick={handleRegistButton}
                 >
                   등록
                 </BasicButton>
