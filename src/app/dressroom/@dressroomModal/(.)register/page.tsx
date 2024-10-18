@@ -1,6 +1,6 @@
-import { DRregisterModal } from "@/components/organism";
+import { RegistItemModal } from "@/components/organism";
 
 const Page = async () => {
-  return <DRregisterModal />;
+  return <RegistItemModal />;
 };
 export default Page;

@@ -1,3 +1,6 @@
+import { RegistItemStoreProvider } from "@/providers/registItem-store-provider";
+import { RegistModalStoreProvider } from "@/providers/registModal-store-provider";
+
 export default function Layout({
   children,
   dressroomModal,
@@ -6,9 +9,11 @@ export default function Layout({
   dressroomModal: React.ReactNode;
 }) {
   return (
-    <>
-      {children}
-      {dressroomModal}
-    </>
+    <RegistItemStoreProvider>
+      <RegistModalStoreProvider>
+        {children}
+        {dressroomModal}
+      </RegistModalStoreProvider>
+    </RegistItemStoreProvider>
   );
 }

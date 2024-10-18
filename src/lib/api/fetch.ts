@@ -1,3 +1,4 @@
+import { createRegistItemStore } from "@/store/registItemStore";
 import { TCollection, TUser } from "@/types/DatabaseTypes";
 import { NextResponse } from "next/server";
 
@@ -58,18 +59,15 @@ export const getStyle = async (styleId: string) => {
 };
 /* puppeteer에 url 전달 API */
 export const submitURL = async (formData: FormData) => {
-  "use server";
   try {
     const url = formData.get("url");
     const encodedUrl = encodeURIComponent(url as string);
-
     const res = await fetch(`${MONGO_API}/dressroom/${encodedUrl}`, {
       cache: "no-cache",
     });
     const { data } = await res.json();
-    console.log(data);
 
-    return { success: true, data };
+    return { success: true, data: data.data };
   } catch (err: any) {
     return { success: false, error: err.message };
   }
