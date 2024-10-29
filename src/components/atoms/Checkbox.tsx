@@ -8,7 +8,7 @@ interface TCheckbox {
   type: "all" | "seperate";
   className?: string;
   checked: boolean;
-  onchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Checkbox = ({

@@ -56,12 +56,18 @@ const FirstStep = ({ setJoinStep }: TStepComponent) => {
         onChange={handleCheck}
         className="flex flex-col justify-center gap-4 pb-10"
       >
-        <Checkbox id="all" type="all" checked={isChecked.all}>
+        <Checkbox id="all" type="all" name="allCheck" checked={isChecked.all}>
           모두 동의(선택 정보 포함)
         </Checkbox>
         <hr />
         {List.map(({ id, desc }) => (
-          <Checkbox key={id} id={id} type="seperate" checked={isChecked[id]}>
+          <Checkbox
+            key={id}
+            name="내림차순"
+            id={id}
+            type="seperate"
+            checked={isChecked[id]}
+          >
             {desc}
           </Checkbox>
         ))}
