@@ -18,11 +18,16 @@ export const getFullList = async (
 
 // 유저 1명만 불러오기 getOneUser(userId)
 export const getOneUser = async (userId: string): Promise<TUser> => {
-  const res = await fetch(`${MONGO_API}/user/${userId}`, {
-    cache: "no-cache",
-  });
-  const user = await res.json();
-  return user;
+  try {
+    const res = await fetch(`${MONGO_API}/user/${userId}`);
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    const user = await res.json();
+    return user;
+  } catch (error) {
+    throw error;
+  }
 };
 
 // 유저 생성하기
