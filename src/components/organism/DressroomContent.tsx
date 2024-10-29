@@ -89,7 +89,7 @@ const DressroomContent = ({ items }: { items: TDressroom[] }) => {
   return (
     <>
       <UrlInputModal open={urlModal} />
-      <RegistItemModal open={true} />
+      <RegistItemModal open={false} />
       <aside className="box-content flex w-[304px] flex-col gap-[64px] pr-[80px]">
         <div className="flex flex-col gap-[18px]">
           {/* Season */}
