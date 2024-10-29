@@ -17,7 +17,7 @@ export const StyleCard = ({ style }: StyleCardProps) => {
     setIsBookmarked(!isBookmarked);
   };
   return (
-    <li key={style._id} className="group relative max-w-[260px]">
+    <div key={style._id} className="group relative max-w-[260px]">
       <Link href={`/style/${style._id}`} className="block">
         <div className="absolute inset-0 z-10 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-30"></div>
         <button
@@ -41,6 +41,6 @@ export const StyleCard = ({ style }: StyleCardProps) => {
           <figcaption className="sr-only">{style.hashtag.join()}</figcaption>
         </figure>
       </Link>
-    </li>
+    </div>
   );
 };
