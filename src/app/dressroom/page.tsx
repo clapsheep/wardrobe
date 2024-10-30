@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { DressroomContent } from "@/components/organism";
 import { getOneUser } from "@/lib/api";
 

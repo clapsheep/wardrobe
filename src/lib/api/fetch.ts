@@ -2,13 +2,13 @@ import { createRegistItemStore } from "@/store/registItemStore";
 import { TCollection, TUser } from "@/types/DatabaseTypes";
 import { NextResponse } from "next/server";
 
-const { MONGO_API } = process.env;
+const { NEXT_PUBLIC_API } = process.env;
 
 // 해당 테이블 리스트 다 불러오기 getFullList(collection)
 export const getFullList = async (
   collection: TCollection,
 ): Promise<TUser[]> => {
-  const res = await fetch(`${MONGO_API}/${collection}`, { cache: "no-cache" });
+  const res = await fetch(`${NEXT_PUBLIC_API}/${collection}`, { cache: "no-cache" });
   const list = await res.json();
 
   return list;
@@ -19,7 +19,7 @@ export const getFullList = async (
 // 유저 1명만 불러오기 getOneUser(userId)
 export const getOneUser = async (userId: string): Promise<TUser> => {
   try {
-    const res = await fetch(`${MONGO_API}/user/${userId}`);
+    const res = await fetch(`${NEXT_PUBLIC_API}/user/${userId}`);
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
@@ -33,7 +33,7 @@ export const getOneUser = async (userId: string): Promise<TUser> => {
 // 유저 생성하기
 export const createUser = async () => {
   try {
-    const res = await fetch(`${MONGO_API}/user`, { method: "POST" });
+    const res = await fetch(`${NEXT_PUBLIC_API}/user`, { method: "POST" });
   } catch (err: any) {
     return NextResponse.json({ err: err.message });
   }
@@ -42,7 +42,7 @@ export const createUser = async () => {
 // 유저 삭제하기 deleteUser(userId)
 export const deleteUser = async (userId: string) => {
   try {
-    const res = await fetch(`${MONGO_API}/user/${userId}`, {
+    const res = await fetch(`${NEXT_PUBLIC_API}/user/${userId}`, {
       method: "DELETE",
     });
   } catch (err: any) {
@@ -53,7 +53,7 @@ export const deleteUser = async (userId: string) => {
 /* style 관련 API */
 export const getStyle = async (styleId: string) => {
   try {
-    const res = await fetch(`${MONGO_API}/style/${styleId}`, {
+    const res = await fetch(`${NEXT_PUBLIC_API}/style/${styleId}`, {
       cache: "no-cache",
     });
     const style = await res.json();
@@ -67,7 +67,7 @@ export const submitURL = async (formData: FormData) => {
   try {
     const url = formData.get("url");
     const encodedUrl = encodeURIComponent(url as string);
-    const res = await fetch(`${MONGO_API}/dressroom/${encodedUrl}`, {
+    const res = await fetch(`${NEXT_PUBLIC_API}/dressroom/${encodedUrl}`, {
       cache: "no-cache",
     });
     const { data } = await res.json();
