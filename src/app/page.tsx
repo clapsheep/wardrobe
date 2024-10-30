@@ -20,15 +20,17 @@ interface Tdata {
 }
 
 export default async function Home() {
-  const { MONGO_API } = process.env;
+  const { NEXT_PUBLIC_API } = process.env;
 
   // 추후 로그인 기능 구현 시 JWT 토근에서 userId 받아오기
   const userId = "667c2764df7a458908b4b54b";
 
   const res = await Promise.all([
-    fetch(`${MONGO_API}/style`, { cache: "no-store" }),
-    fetch(`${MONGO_API}/user/${userId}/style/recommend`, { cache: "no-store" }),
-    fetch(`${MONGO_API}/user/${userId}`, { cache: "no-store" }),
+    fetch(`${NEXT_PUBLIC_API}/style`, { cache: "no-store" }),
+    fetch(`${NEXT_PUBLIC_API}/user/${userId}/style/recommend`, {
+      cache: "no-store",
+    }),
+    fetch(`${NEXT_PUBLIC_API}/user/${userId}`, { cache: "no-store" }),
   ]);
   const [randomStyleList, recommendStyleFromDressroom, user] =
     await Promise.all(res.map((i) => i.json()));

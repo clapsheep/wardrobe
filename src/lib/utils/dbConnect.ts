@@ -8,9 +8,9 @@ declare global {
   };
 }
 
-const { NEXT_PUBLIC_MONGO_URI } = process.env;
+const { NEXT_PUBLIC_URI } = process.env;
 
-if (!NEXT_PUBLIC_MONGO_URI) {
+if (!NEXT_PUBLIC_URI) {
   throw new Error(".env.local에 있는 MONGO_URI를 확인해주세요.");
 }
 let cached = global.mongoose;
@@ -25,7 +25,7 @@ async function dbConnect() {
   if (!cached.promise) {
     cached.promise = mongoose
       .set({ debug: true, strictQuery: false })
-      .connect(`${NEXT_PUBLIC_MONGO_URI}`, {
+      .connect(`${NEXT_PUBLIC_URI}`, {
         dbName: "wardrobe",
         ...(process.env.NODE_ENV === "development" ? { maxPoolSize: 1 } : {}), // 배포시 해당 줄 삭제
       })
