@@ -1,8 +1,12 @@
+import { Footer, Header } from "@/components/molecules";
+import "@/styles/globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Poppins } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   title: "wardrobe",
@@ -12,12 +16,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  stylemodal,
 }: Readonly<{
   children: React.ReactNode;
+  stylemodal: React.ReactNode;
 }>) {
   return (
     <html lang="ko-KR">
-      <body className={inter.className}>{children}</body>
+      <body className={`${poppins.className} relative`}>
+        <Header />
+        {children}
+        {stylemodal}
+        <Footer />
+      </body>
     </html>
   );
 }
